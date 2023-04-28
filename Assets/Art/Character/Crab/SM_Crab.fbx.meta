@@ -7,6 +7,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Crab
+    second: {fileID: 2100000, guid: 1ef914008afe9a844973492fbcd87f3e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: lambert1
     second: {fileID: 2100000, guid: 1ef914008afe9a844973492fbcd87f3e, type: 2}
   materials:
