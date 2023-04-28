@@ -1,18 +1,16 @@
 ﻿using Unity.Mathematics;
 using UnityEngine;
 
-public class ItemSpawnPoint : MonoBehaviour
+public class ItemCollectionPoint : MonoBehaviour
 {
 	private Throwable item;
 
-	public bool TrySpawnItem(Throwable item)
+	public bool HasItem { get; private set; }
+
+	public void SetItem(Throwable item)
 	{
-		if (this.item != null) return false;
-
-		Instantiate(item, transform.position, quaternion.identity);
 		this.item = item;
-
-		return true;
+		HasItem = true;
 	}
 
 	public bool TryGetItem(out Throwable item)
@@ -21,6 +19,8 @@ public class ItemSpawnPoint : MonoBehaviour
 		if (this.item == null) return false;
 
 		item = this.item;
+		this.item = null;
+		HasItem = false;
 		return true;
 	}
 }
