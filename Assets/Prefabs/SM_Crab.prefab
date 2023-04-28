@@ -167,11 +167,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidbody: {fileID: -1256738983168518666}
+  myPosition: {fileID: 11400000, guid: b1020d4be2e497c45b3154343aa8d328, type: 2}
   opponentPosition: {fileID: 11400000, guid: 182a6503e493ebd469c4bd9337a32293, type: 2}
   startingDirection: 1
   health: 5
   movementSpeed: 0.1
   jumpForce: 120
+  nearbyCollectionPoint: {fileID: 0}
 --- !u!114 &-4874796335514687623
 MonoBehaviour:
   m_ObjectHideFlags: 0

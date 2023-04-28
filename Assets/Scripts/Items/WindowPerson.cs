@@ -5,7 +5,7 @@ using UnityEngine;
 public class WindowPerson : MonoBehaviour
 {
 	[SerializeField]
-	private ItemCollectionPoint itemCollectionPoint;
+	public ItemCollectionPoint itemCollectionPoint;
 
 	public bool IsThrowing { get; private set; }
 

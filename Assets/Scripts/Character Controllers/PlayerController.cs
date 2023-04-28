@@ -23,11 +23,10 @@ public class PlayerController : BaseController
     {
         if (currentItem != null)
         {
-            // Throw();
+            ThrowItem();
         }
         else if (nearbyCollectionPoint != null)
         {
-            // Pick up item
             PickUp();
         }
         else

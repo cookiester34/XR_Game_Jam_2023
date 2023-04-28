@@ -110,5 +110,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f0077e4b34f431c8c7b5c74e3d49487, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <ThrowType>k__BackingField: 0
-  <ThrowDistance>k__BackingField: 10
+  <ThrowType>k__BackingField: 2
+  <ThrowSpeed>k__BackingField: 0.1
+  <ThrowDistance>k__BackingField: 100

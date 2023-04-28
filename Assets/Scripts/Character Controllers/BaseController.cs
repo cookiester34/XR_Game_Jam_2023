@@ -15,11 +15,14 @@ public class BaseController : MonoBehaviour
     private Rigidbody rigidbody;
 
     [SerializeField]
+    protected Vector3Data myPosition;
+
+    [SerializeField]
     protected Vector3Data opponentPosition;
 
     [SerializeField]
     private Directionality startingDirection;
-    protected Directionality currentDirection;
+    protected Directionality facingDirection;
 
     [SerializeField]
     protected float health;
@@ -53,7 +56,12 @@ public class BaseController : MonoBehaviour
         {
             Debug.LogError("Didn't get item");
         }
+    }
 
+    public void ThrowItem()
+    {
+        currentItem.Throw(facingDirection);
+        currentItem = null;
     }
 
     private bool IsGrounded()
@@ -63,7 +71,7 @@ public class BaseController : MonoBehaviour
 
     private void Start()
     {
-        currentDirection = startingDirection;
+        facingDirection = startingDirection;
     }
 
     protected void Update()
@@ -73,17 +81,19 @@ public class BaseController : MonoBehaviour
 
         if (positionX > opponentX)
         {
-            currentDirection = Directionality.Right;
+            facingDirection = Directionality.Right;
         }
         else if (positionX < opponentX)
         {
-            currentDirection = Directionality.Left;
+            facingDirection = Directionality.Left;
         }
 
         if (currentItem != null)
         {
             currentItem.transform.position = transform.position + new Vector3(0, 10, 0);
         }
+
+        myPosition.SetVector3(transform.position);
     }
 
     private void FixedUpdate()

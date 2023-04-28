@@ -8,7 +8,7 @@ public class ItemSpawning : MonoBehaviour
 	private ObjectRegister objectRegister;
 
 	[SerializeField]
-	private WindowPerson[] windowPersons;
+	public WindowPerson[] windowPersons;
 
 	[SerializeField]
 	private int maxSpawnableObjects;
