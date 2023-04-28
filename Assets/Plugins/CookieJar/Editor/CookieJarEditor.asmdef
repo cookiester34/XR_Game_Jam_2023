@@ -1,0 +1,18 @@
+{
+    "name": "CookieJarEditor",
+    "rootNamespace": "CookieJar.Editor",
+    "references": [
+        "GUID:4f343cea3c9d7f443b08d81fd2d0ab42"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
