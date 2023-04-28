@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 0e5ab84558d975b4a90084a06c200959
+guid: 720b2d057d77f994aa30ed3972d5d5d1
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable:
   - first:
       74: 1827226128182048838
-    second: Idle_Hol_01
+    second: Death_Pose
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -36,7 +36,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Idle_Hol_01
+      name: Death_Pose
       takeName: Take 001
       internalID: 0
       firstFrame: 0

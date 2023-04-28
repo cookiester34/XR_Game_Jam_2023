@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 540e90ec4bbec7648a6cdd74a56a4395
+guid: 0ed583adbc724504b80c5c54d9c3fb43
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable:
   - first:
       74: 1827226128182048838
-    second: Throw_R_01
+    second: Walk_L_Hold
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -36,7 +36,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Throw_R_01
+      name: Walk_L_Hold
       takeName: Take 001
       internalID: 0
       firstFrame: 0
@@ -47,7 +47,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 1
