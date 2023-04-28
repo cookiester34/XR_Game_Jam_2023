@@ -5,8 +5,8 @@ using UnityEngine;
 
 public enum Directionality
 {
-    Left = -1,
-    Right = 1
+    Left = 1,
+    Right = -1
 }
 
 public class BaseController : MonoBehaviour
@@ -26,37 +26,30 @@ public class BaseController : MonoBehaviour
 
     [SerializeField]
     private float movementSpeed;
+
     [SerializeField]
     private float jumpForce;
 
-    protected bool isMoving = false;
     protected bool isNearItemSpawnPoint = false;
 
     protected Throwable currentItem = null; // currentItem = revolver;
 
     public void Move(Directionality direction)
     {
-        rigidbody.AddForce((float)direction * movementSpeed * Time.deltaTime, 0, 0);
-        rigidbody.velocity = new Vector3(Mathf.Clamp(rigidbody.velocity.x, 0, movementSpeed), rigidbody.velocity.y, 0);
+        transform.position = new Vector3(transform.position.x + (float)direction * movementSpeed, transform.position.y, 0);
     }
 
     public void Jump()
     {
         if (IsGrounded())
         {
-            rigidbody.AddForce(0, jumpForce * Time.deltaTime, 0);
+            rigidbody.AddForce(0, jumpForce, 0, ForceMode.VelocityChange);
         }
-    }
-
-    private void ApplyFriction()
-    {
-        //rigidbody.velocity = new Vector3(Mathf.Lerp(rigidbody.velocity.x, 0f, 0.5f), rigidbody.velocity.y, 0);
-        rigidbody.velocity = new Vector3(Utils.Smootherstep(rigidbody.velocity.x, 0f, 1), rigidbody.velocity.y, 0);
     }
 
     private bool IsGrounded()
     {
-        return transform.position.y <= 0f;
+        return Physics.Raycast(transform.position + Vector3.up, Vector3.down, 4);
     }
 
     private void Start()
@@ -81,9 +74,9 @@ public class BaseController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!isMoving)
+        if (!IsGrounded())
         {
-            ApplyFriction();
+            rigidbody.AddForce(Vector3.down * Time.deltaTime * 491f, ForceMode.VelocityChange);
         }
     }
 }
