@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbebd45e63f49574284790f1ce92b7b3, type: 3}
   m_Name: Object Register
   m_EditorClassIdentifier: 
-  <Throwables>k__BackingField: []
+  <Throwables>k__BackingField:
+  - {fileID: 8529094240007822706, guid: 049870b715db24e45a3755f0dda318bf, type: 3}

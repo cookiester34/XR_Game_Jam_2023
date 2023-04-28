@@ -25,9 +25,10 @@ public class PlayerController : BaseController
         {
             // Throw();
         }
-        else if (isNearItemSpawnPoint)
+        else if (nearbyCollectionPoint != null)
         {
             // Pick up item
+            PickUp();
         }
         else
         {

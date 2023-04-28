@@ -25,6 +25,7 @@ public class WindowPerson : MonoBehaviour
 			var distance = Vector3.Distance(throwable.transform.position, itemCollectionPoint.transform.position);
 			if (distance <= 0.1f)
 			{
+				itemCollectionPoint.SetItem(throwable);
 				IsThrowing = false;
 				throwable = null;
 			}

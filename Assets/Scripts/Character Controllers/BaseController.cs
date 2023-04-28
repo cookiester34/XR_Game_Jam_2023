@@ -30,13 +30,13 @@ public class BaseController : MonoBehaviour
     [SerializeField]
     private float jumpForce;
 
-    protected bool isNearItemSpawnPoint = false;
+    public ItemCollectionPoint nearbyCollectionPoint;
 
-    protected Throwable currentItem = null; // currentItem = revolver;
+    protected Throwable currentItem; // currentItem = revolver;
 
     public void Move(Directionality direction)
     {
-        transform.position = new Vector3(transform.position.x + (float)direction * movementSpeed, transform.position.y, 0);
+        transform.position = new Vector3(transform.position.x + (float)direction * movementSpeed, transform.position.y, transform.position.z);
     }
 
     public void Jump()
@@ -45,6 +45,15 @@ public class BaseController : MonoBehaviour
         {
             rigidbody.AddForce(0, jumpForce, 0, ForceMode.VelocityChange);
         }
+    }
+
+    public void PickUp()
+    {
+        if (!nearbyCollectionPoint.TryGetItem(out currentItem))
+        {
+            Debug.LogError("Didn't get item");
+        }
+
     }
 
     private bool IsGrounded()
@@ -69,6 +78,11 @@ public class BaseController : MonoBehaviour
         else if (positionX < opponentX)
         {
             currentDirection = Directionality.Left;
+        }
+
+        if (currentItem != null)
+        {
+            currentItem.transform.position = transform.position + new Vector3(0, 10, 0);
         }
     }
 
