@@ -21,7 +21,7 @@ public class WindowPerson : MonoBehaviour
 	{
 		if (throwable != null)
 		{
-			throwable.transform.position = Utils.Smoothstep(throwable.transform.position, itemCollectionPoint.transform.position, 0.1f);
+			throwable.transform.position = Utils.Smoothstep(throwable.transform.position, itemCollectionPoint.transform.position, 0.07f);
 			var distance = Vector3.Distance(throwable.transform.position, itemCollectionPoint.transform.position);
 			if (distance <= 0.1f)
 			{
