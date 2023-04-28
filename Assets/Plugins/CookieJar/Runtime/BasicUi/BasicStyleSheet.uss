@@ -1,0 +1,109 @@
+/*Universal Styling*/
+.link_cursor{
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.link_cursor > VisualElement:hover{
+    cursor: link;
+}
+.link_cursor > VisualElement > VisualElement:hover{
+    cursor: link;
+}
+
+/*Toggle Styling*/
+.toggle_round > VisualElement{
+    width: 35px;
+    height: 20px;
+    background-color: #383838;
+    border-radius: 10px;
+    border-width: 1px;
+    border-color: #505050;
+    transition-property: background-color, right;
+    transition-duration: 0.2s, 0.2s;
+}
+
+.toggle_round > VisualElement > VisualElement{
+    width: 20px;
+    height: 30px;
+    background-color: #a5a5a5;
+    border-radius: 10px;
+    border-width: 1px;
+    overflow: hidden;
+    right: 1px;
+    transition-property: background-color, right;
+    transition-duration: 0.2s, 0.2s;
+}
+
+.toggle_slim > VisualElement{
+    width: 35px;
+    height: 8px;
+    background-color: #383838;
+    border-radius: 4px;
+    border-color: #505050;
+    transition-property: background-color, right;
+    transition-duration: 0.2s, 0.2s;
+}
+
+.toggle_slim > VisualElement > VisualElement{
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background-color: #a5a5a5;
+    border-radius: 10px;
+    border-width: 1px;
+    right: 20px;
+    bottom: -3.5px;
+    transition-property: background-color, right;
+    transition-duration: 0.2s, 0.2s;
+}
+
+.toggle_on > VisualElement{
+    background-color: #3693e0;
+    transition-property: background-color;
+    transition-duration: 0.2s;
+}
+
+.toggle_on > VisualElement > VisualElement{
+    right: -14px;
+    transition-property: right;
+    transition-duration: 0.2s;
+}
+
+.toggle_on_slim > VisualElement{
+    background-color: #3693e0;
+    transition-property: background-color;
+    transition-duration: 0.2s;
+}
+
+.toggle_on_slim > VisualElement > VisualElement{
+    right: -1px;
+    transition-property: right;
+    transition-duration: 0.2s;
+}
+
+/*Slider Styling*/
+.slider_round > VisualElement{
+    width: 100%;
+    height: 20px;
+    background-color: #383838;
+    border-radius: 10px;
+    border-width: 1px;
+    border-color: #505050;
+    transition-property: background-color, right;
+    transition-duration: 0.2s, 0.2s;
+}
+
+.slider_round_handle{
+    width: 20px;
+    height: 30px;
+    background-color: #a5a5a5;
+    border-radius: 10px;
+    border-width: 1px;
+    overflow: hidden;
+    right: 1px;
+    transition-property: background-color, right;
+    transition-duration: 0.2s, 0.2s;
+}
