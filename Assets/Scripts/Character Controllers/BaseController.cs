@@ -1,5 +1,6 @@
 using System;
 using CookieUtils.UtilSubHelpers.DataTypes;
+using CookieUtils;
 using UnityEngine;
 
 public enum Directionality
@@ -18,16 +19,20 @@ public class BaseController : MonoBehaviour
 
     [SerializeField]
     private Directionality startingDirection;
-
     protected Directionality currentDirection;
 
     [SerializeField]
-    private float movementSpeed;
+    protected float health;
 
+    [SerializeField]
+    private float movementSpeed;
     [SerializeField]
     private float jumpForce;
 
     protected bool isMoving = false;
+    protected bool isNearItemSpawnPoint = false;
+
+    protected Throwable currentItem = null; // currentItem = revolver;
 
     public void Move(Directionality direction)
     {
@@ -45,7 +50,8 @@ public class BaseController : MonoBehaviour
 
     private void ApplyFriction()
     {
-        rigidbody.velocity = new Vector3(Mathf.Lerp(rigidbody.velocity.x, 0f, 0.5f), rigidbody.velocity.y, 0);
+        //rigidbody.velocity = new Vector3(Mathf.Lerp(rigidbody.velocity.x, 0f, 0.5f), rigidbody.velocity.y, 0);
+        rigidbody.velocity = new Vector3(Utils.Smootherstep(rigidbody.velocity.x, 0f, 1), rigidbody.velocity.y, 0);
     }
 
     private bool IsGrounded()
@@ -58,7 +64,7 @@ public class BaseController : MonoBehaviour
         currentDirection = startingDirection;
     }
 
-    private void Update()
+    protected void Update()
     {
         var positionX = transform.position.x;
         var opponentX = opponentPosition.GetVector3().x;
