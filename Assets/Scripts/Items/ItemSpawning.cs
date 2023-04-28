@@ -1,3 +1,5 @@
+using CookieUtils;
+using System.Linq;
 using UnityEngine;
 
 public class ItemSpawning : MonoBehaviour
@@ -6,7 +8,7 @@ public class ItemSpawning : MonoBehaviour
 	private ObjectRegister objectRegister;
 
 	[SerializeField]
-	private ItemSpawnPoint[] itemSpawnPoints;
+	private WindowPerson[] windowPersons;
 
 	[SerializeField]
 	private int maxSpawnableObjects;
@@ -19,18 +21,19 @@ public class ItemSpawning : MonoBehaviour
 		{
 			if (AttemptObjectSpawn())
 			{
-				maxSpawnableObjects++;
+				numberOfSpawnedAssets++;
 			}
 		}
 	}
 
 	private bool AttemptObjectSpawn()
 	{
-		foreach (var spawnPoint in itemSpawnPoints)
-		{
-			if (spawnPoint.TrySpawnItem(objectRegister.GetRandomThrowable())) return true;
-		}
+		var windowPerson = windowPersons.Where(person => !person.IsThrowing).ToList();
 
-		return false;
+		if (windowPerson.Count <= 0) return false;
+
+		windowPerson.RandomElement().SpawnItem(objectRegister.GetRandomThrowable());
+
+		return true;
 	}
 }
