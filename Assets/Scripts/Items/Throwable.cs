@@ -1,4 +1,5 @@
-﻿using CookieUtils;
+﻿using System;
+using CookieUtils;
 using CookieUtils.UtilSubHelpers;
 using UnityEngine;
 
@@ -53,7 +54,7 @@ public class Throwable : MonoBehaviour
 		switch (ThrowType)
 		{
 			case ThrowType.Roll:
-				transform.position = new Vector3(transform.position.x + (float)direction * 5, -37f, transform.position.z);
+				transform.position = new Vector3(transform.position.x + (float)direction * 10, -37f, transform.position.z);
 				break;
 			case ThrowType.Bounce:
 				break;
@@ -109,5 +110,15 @@ public class Throwable : MonoBehaviour
 			return transform.position.x >= destination;
 		}
 		return transform.position.x <= destination;
+	}
+
+	private void OnTriggerEnter(Collider other)
+	{
+		var hitting = other.GetComponentInParent<BaseController>();
+		if (hitting != null)
+		{
+			hitting.health -= 1;
+			Debug.Log($"Health: {hitting.health}");
+		}
 	}
 }

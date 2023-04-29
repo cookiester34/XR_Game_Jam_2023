@@ -25,7 +25,7 @@ public class BaseController : MonoBehaviour
     protected Directionality facingDirection;
 
     [SerializeField]
-    protected float health;
+    public int health;
 
     [SerializeField]
     private float movementSpeed;
