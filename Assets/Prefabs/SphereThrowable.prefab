@@ -111,7 +111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f0077e4b34f431c8c7b5c74e3d49487, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  throwSpeed: 0.003
+  throwSpeed: 0.03
   throwDistance: 1.5
   collisionWarner: {fileID: 5514576726751247218}
   collider: {fileID: 954246076362920453}

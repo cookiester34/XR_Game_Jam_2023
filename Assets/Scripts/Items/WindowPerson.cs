@@ -1,5 +1,6 @@
 ﻿using Unity.Mathematics;
 using CookieUtils;
+using CookieUtils.UtilSubHelpers;
 using UnityEngine;
 
 public class WindowPerson : MonoBehaviour
@@ -11,10 +12,21 @@ public class WindowPerson : MonoBehaviour
 
 	private Throwable throwable;
 
+	private TimerData timer;
+
+	public bool canSpawn;
+
+	private void Start()
+	{
+		timer = Utils.CreateTimer(1f);
+	}
+
 	public void SpawnItem(Throwable item)
 	{
 		IsThrowing = true;
 		throwable = Instantiate(item, transform.position, quaternion.identity);
+		timer.ResetTimer();
+		canSpawn = false;
 	}
 
 	private void Update()
@@ -29,6 +41,11 @@ public class WindowPerson : MonoBehaviour
 				IsThrowing = false;
 				throwable = null;
 			}
+		}
+
+		if (timer.timerDone.value)
+		{
+			canSpawn = true;
 		}
 	}
 }

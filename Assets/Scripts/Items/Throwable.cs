@@ -32,14 +32,17 @@ public class Throwable : MonoBehaviour
 
 	public ItemCollectionPoint collectionPoint;
 
+	private BaseController LastController;
+
 	private void Start()
 	{
 		ItemSpawning.Instance.allThrowables.Add(this);
 		timer = Utils.CreateTimer(5f, true);
 	}
 
-	public void Throw(int direction)
+	public void Throw(int direction, BaseController controller)
 	{
+		LastController = controller;
 		collisionWarner.GetComponent<CapsuleCollider>().enabled = true;
 		this.direction = direction;
 		transform.position += new Vector3(0, -0.14f, 0);
@@ -54,7 +57,7 @@ public class Throwable : MonoBehaviour
 		collider.enabled = true;
 	}
 
-	private void Update()
+	private void FixedUpdate()
 	{
 		if (Throwing)
 		{
@@ -63,7 +66,7 @@ public class Throwable : MonoBehaviour
 			{
 				Throwing = false;
 				rolling = true;
-				rollTarget = transform.position + new Vector3(direction * 0.7f, 0, 0);
+				rollTarget = transform.position + new Vector3(direction * 0.3f, 0, 0);
 			}
 		}
 
@@ -81,6 +84,11 @@ public class Throwable : MonoBehaviour
 			}
 
 		}
+
+		if (timer.timerDone.value)
+		{
+			DestroyItem();
+		}
 	}
 
 	public void PickUp()
@@ -91,14 +99,6 @@ public class Throwable : MonoBehaviour
 		}
 		timer.Pause();
 		timer.ResetTimer();
-	}
-
-	private void FixedUpdate()
-	{
-		if (timer.timerDone.value)
-		{
-			DestroyItem();
-		}
 	}
 
 	private void DestroyItem()
@@ -112,9 +112,11 @@ public class Throwable : MonoBehaviour
 		if (!Launched) return;
 
 		var hitting = other.GetComponentInParent<BaseController>();
+		if (LastController == hitting) return;
 		if (hitting != null)
 		{
 			hitting.health -= 1;
+			DestroyItem();
 			//Debug.Log($"Health: {hitting.health}");
 		}
 	}

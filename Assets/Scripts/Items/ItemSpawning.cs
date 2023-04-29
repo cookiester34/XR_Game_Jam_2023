@@ -64,7 +64,7 @@ public class ItemSpawning : MonoBehaviour
 	{
 		var windowPerson = windowPersons.Where(person => !person.IsThrowing && !person.itemCollectionPoint.HasItem).ToList();
 
-		if (windowPerson.Count < maxSpawnableObjects) return false;
+		if (windowPerson.Count <= 0) return false;
 
 		windowPerson.RandomElement().SpawnItem(objectRegister.GetRandomThrowable());
 

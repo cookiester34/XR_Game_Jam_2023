@@ -23,7 +23,7 @@ public class AiController : BaseController
 	[SerializeField]
 	private Transform rightRandomPoint;
 
-	public Directionality randomDirection = 0;
+	public Directionality randomDirection = Directionality.Left;
 
 	private void Awake()
 	{
@@ -33,7 +33,7 @@ public class AiController : BaseController
 		AiDoingSomethingRandomTimer = Utils.CreateTimer(2f);
 		AiDoingSomethingRandomTimer.ResetTimer();
 
-		AiThrowTimer = Utils.CreateTimer(1f);
+		AiThrowTimer = Utils.CreateTimer(1.4f);
 		AiThrowTimer.EndTimer();
 	}
 
@@ -79,20 +79,14 @@ public class AiController : BaseController
 			if (!AiDoingSomethingRandomTimer.timerDone.value)
 			{
 				// Move(Random.Range(0, 10) <= 9 ? facingDirection : facingDirection == Directionality.Left ? Directionality.Right : Directionality.Left);
-				if (Vector3.Distance(transform.position, leftRandomPoint.position) <= Vector3.Distance(transform.position, rightRandomPoint.position))
+				if (Vector3.Distance(transform.position, leftRandomPoint.position) <= 0.5f)
 				{
-					if (randomDirection == 0)
-					{
-						randomDirection = Directionality.Right;
-					}
+					randomDirection = Directionality.Right;
 					Move(randomDirection);
 				}
-				else
+				else if (Vector3.Distance(transform.position, rightRandomPoint.position) <= 0.5f)
 				{
-					if (randomDirection == 0)
-					{
-						randomDirection = Directionality.Left;
-					}
+					randomDirection = Directionality.Left;
 					Move(randomDirection);
 				}
 			}
@@ -100,7 +94,6 @@ public class AiController : BaseController
 			{
 				doingSomethingRandom = false;
 				Debug.Log("stopped being random");
-				randomDirection = 0;
 			}
 		}
 		else if (currentItem == null)
@@ -110,7 +103,7 @@ public class AiController : BaseController
 				Jump();
 				AiJumpTimer.ResetTimer();
 			}
-			else if (collectionPointGoTo == null)
+			if (collectionPointGoTo == null)
 			{
 				FindCollectionPoint();
 			}

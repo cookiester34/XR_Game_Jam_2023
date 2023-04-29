@@ -88,7 +88,7 @@ public class BaseController : MonoBehaviour
 
     private void TheRealThrow()
     {
-        currentItem.Throw((int) facingDirection);
+        currentItem.Throw((int) facingDirection, this);
         currentItem = null;
     }
 
@@ -112,6 +112,11 @@ public class BaseController : MonoBehaviour
         if (!IsGrounded())
         {
             rigidbody.AddForce(Vector3.down * Time.deltaTime * 491f, ForceMode.VelocityChange);
+            animator.SetBool("Grounded", false);
+        }
+        else
+        {
+            animator.SetBool("Grounded", true);
         }
 
         var positionX = transform.position.x;
