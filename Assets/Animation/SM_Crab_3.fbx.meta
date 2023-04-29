@@ -3,7 +3,17 @@ guid: e3857e27a1dacb34282ec3766110391d
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Crab
+    second: {fileID: 2100000, guid: 1ef914008afe9a844973492fbcd87f3e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pasted__Crab1
+    second: {fileID: 2100000, guid: 1ef914008afe9a844973492fbcd87f3e, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
