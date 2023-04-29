@@ -23,6 +23,9 @@ public class Throwable : MonoBehaviour
 	[field: SerializeField]
 	public SphereCollider collider;
 
+	[field: SerializeField]
+	public CapsuleCollider collisionWarner;
+
 	public bool Launched { get; set; }
 
 	private bool slowlyRolling;
@@ -31,7 +34,7 @@ public class Throwable : MonoBehaviour
 
 	private float destination;
 
-	private Directionality direction = 0;
+	public Directionality direction = 0;
 
 	private TimerData timer;
 
@@ -44,6 +47,7 @@ public class Throwable : MonoBehaviour
 	{
 		collider.enabled = true;
 		Launched = true;
+		collisionWarner.GetComponent<CapsuleCollider>().enabled = true;
 		this.direction = direction;
 		destination = transform.position.x + (float)direction * ThrowDistance;
 		switch (ThrowType)
@@ -76,6 +80,7 @@ public class Throwable : MonoBehaviour
 				slowRollTarget = new Vector3(transform.position.x + (float) direction * 20, -37f,0);
 				timer ??= Utils.CreateTimer(1f);
 			}
+
 		}
 
 		if (slowlyRolling)
@@ -84,6 +89,7 @@ public class Throwable : MonoBehaviour
 			if (Vector3.Distance(transform.position, slowRollTarget) <= 0.1f)
 			{
 				slowlyRolling = false;
+				collisionWarner.GetComponent<CapsuleCollider>().enabled = false;
 			}
 		}
 
