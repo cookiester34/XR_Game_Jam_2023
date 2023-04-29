@@ -11,6 +11,11 @@ public class Throwable : MonoBehaviour
 	private float throwDistance;
 	public float ThrowDistance => throwDistance;
 
+	[field: SerializeField]
+	public CapsuleCollider collisionWarner;
+
+	public bool Launched { get; set; }
+
 	private Vector3 target;
 	private Vector3 rollTarget;
 
@@ -32,6 +37,7 @@ public class Throwable : MonoBehaviour
 
 	public void Throw(int direction)
 	{
+		collisionWarner.GetComponent<CapsuleCollider>().enabled = true;
 		this.direction = direction;
 		transform.position += new Vector3(0, -7, 0);
 		target = transform.position + new Vector3(direction * throwDistance, 0,0);
@@ -59,7 +65,9 @@ public class Throwable : MonoBehaviour
 				rolling = false;
 				waiting = true;
 				timer.Unpause();
+				collisionWarner.GetComponent<CapsuleCollider>().enabled = false;
 			}
+
 		}
 	}
 

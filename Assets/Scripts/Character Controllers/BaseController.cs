@@ -42,6 +42,9 @@ public class BaseController : MonoBehaviour
     [field:SerializeField]
     public bool IsPlayer { get; set; }
 
+    public bool shouldDodgeFromLeft;
+    public bool shouldDodgeFromRight;
+
     public void Move(Directionality direction)
     {
         transform.position = new Vector3(transform.position.x + (float)direction * movementSpeed, transform.position.y, transform.position.z);
