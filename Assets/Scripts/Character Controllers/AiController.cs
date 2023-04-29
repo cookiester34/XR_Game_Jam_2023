@@ -37,10 +37,18 @@ public class AiController : BaseController
 				if (nearbyCollectionPoint != null)
 				{
 					PickUp();
+					collectionPointGoTo = null;
 				}
 				else if (collectionPointGoTo != null)
 				{
-					Move(goDirection);
+					if (collectionPointGoTo.HasItem)
+					{
+						Move(goDirection);
+					}
+					else
+					{
+						collectionPointGoTo = null;
+					}
 				}
 			}
 		}
@@ -74,6 +82,7 @@ public class AiController : BaseController
 	private void FindCollectionPoint()
 	{
 		collectionPointGoTo = null;
+		nearbyCollectionPoint = null;
 		ItemCollectionPoint destination = null;
 		foreach (var window in spawnPoints.windowPersons)
 		{
@@ -90,7 +99,10 @@ public class AiController : BaseController
 			}
 		}
 		collectionPointGoTo = destination;
-		goDirection = transform.position.x > destination.transform.position.x ? Directionality.Right : Directionality.Left;
+		if (destination != null)
+		{
+			goDirection = transform.position.x > destination.transform.position.x ? Directionality.Right : Directionality.Left;
+		}
 		Debug.Log($"Destination Direction: {goDirection}");
 	}
 }
