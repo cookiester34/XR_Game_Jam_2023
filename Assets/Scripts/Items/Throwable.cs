@@ -111,11 +111,11 @@ public class Throwable : MonoBehaviour
 	{
 		if (!Launched) return;
 
-		var hitting = other.GetComponentInParent<BaseController>();
-		if (LastController == hitting) return;
-		if (hitting != null)
+		var baseController = other.GetComponentInParent<BaseController>();
+		if (LastController == baseController) return;
+		if (baseController != null)
 		{
-			hitting.health -= 1;
+			baseController.TakeDamage();
 			DestroyItem();
 			//Debug.Log($"Health: {hitting.health}");
 		}

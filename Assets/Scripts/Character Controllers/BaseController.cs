@@ -36,6 +36,9 @@ public class BaseController : MonoBehaviour
     [SerializeField]
     protected Animator animator;
 
+    [SerializeField]
+    private HealthBar healthBar;
+
     public ItemCollectionPoint nearbyCollectionPoint;
 
     public Throwable nearbyItem;
@@ -47,6 +50,8 @@ public class BaseController : MonoBehaviour
 
     public bool shouldDodgeFromLeft;
     public bool shouldDodgeFromRight;
+
+    public bool isDead;
 
     public void Move(Directionality direction)
     {
@@ -104,7 +109,18 @@ public class BaseController : MonoBehaviour
 
     protected void Update()
     {
+        if (health <= 0)
+        {
+            animator.SetTrigger("Died");
+            isDead = true;
+            Invoke(nameof(ResturnToMenu), 3f);
+        }
+    }
 
+    private void ResturnToMenu()
+    {
+        Menu.Instance.ReturnToMainMenu();
+        isDead = false;
     }
 
     protected void FixedUpdate()
@@ -137,5 +153,11 @@ public class BaseController : MonoBehaviour
         }
 
         myPosition.SetVector3(transform.position);
+    }
+
+    public void TakeDamage()
+    {
+        health--;
+        healthBar.LostHealth();
     }
 }

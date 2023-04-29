@@ -7,10 +7,8 @@ public class HealthBar : MonoBehaviour
     [SerializeField]
     private BaseController crab;
 
-    private int health;
-
     [SerializeField]
-    private GameObject[] heartSprites;
+    private SpriteRenderer[] heartSprites;
 
     [SerializeField]
     private Sprite FullHeart;
@@ -18,40 +16,22 @@ public class HealthBar : MonoBehaviour
     [SerializeField]
     private Sprite EmptyHeart;
 
-    private void Start()
+    public void LostHealth()
     {
-        health = crab.health;
+        if (crab.health >= 0 && crab.health < heartSprites.Length)
+        {
+            var heartSprite = heartSprites[crab.health];
+            heartSprite.sprite = EmptyHeart;
+        }
     }
 
-    private void Update()
+    public void Reset()
     {
-        if (crab.health == health)
-        {
-            return;
-        }
-        if (crab.health < health)
-        {
-            if (health - 1 >= 0 && health - 1 < heartSprites.Length)
-            {
-                var sprite = heartSprites[health - 1].GetComponent<SpriteRenderer>();
-                sprite.sprite = EmptyHeart;
-            }
+        crab.health = 5;
 
-            health -= 1;
-        }
-        else if (health < 5)
+        foreach (var heartSprite in heartSprites)
         {
-            if (health >= 0 && health < heartSprites.Length)
-            {
-                var sprite = heartSprites[health].GetComponent<SpriteRenderer>();
-                sprite.sprite = FullHeart;
-            }
-
-            health += 1;
-        }
-        else
-        {
-            crab.health = 5;
+            heartSprite.sprite = FullHeart;
         }
     }
 }

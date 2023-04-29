@@ -25,6 +25,8 @@ public class AiController : BaseController
 
 	public Directionality randomDirection = Directionality.Left;
 
+	public bool Active;
+
 	private void Awake()
 	{
 		AiJumpTimer = Utils.CreateTimer(0.5f);
@@ -42,7 +44,7 @@ public class AiController : BaseController
 		collectionPointGoTo = null;
 		nearbyCollectionPoint = null;
 		ItemCollectionPoint destination = null;
-		foreach (var window in spawnPoints.windowPersons)
+		foreach (var window in spawnPoints.windowPersonsAi)
 		{
 			if (window.itemCollectionPoint.HasItem)
 			{
@@ -65,6 +67,8 @@ public class AiController : BaseController
 
 	private void FixedUpdate()
 	{
+		if (!Active || isDead) return;
+
 		base.FixedUpdate();
 
 		if (!doingSomethingRandom && Random.Range(0, 400) <= 1)

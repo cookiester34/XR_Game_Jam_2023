@@ -14,11 +14,11 @@ public class WindowPerson : MonoBehaviour
 
 	private TimerData timer;
 
-	public bool canSpawn;
+	public bool canSpawn = true;
 
 	private void Start()
 	{
-		timer = Utils.CreateTimer(1f);
+		timer = Utils.CreateTimer(3f);
 	}
 
 	public void SpawnItem(Throwable item)

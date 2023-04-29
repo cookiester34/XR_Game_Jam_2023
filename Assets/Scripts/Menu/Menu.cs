@@ -1,9 +1,10 @@
 using ModularMotion;
-using System;
 using UnityEngine;
 
 public class Menu : MonoBehaviour
 {
+    public static Menu Instance;
+
     [SerializeField]
     private GameObject settingsMenu;
 
@@ -37,9 +38,20 @@ public class Menu : MonoBehaviour
     [SerializeField]
     private UIMotion[] startEffects;
 
+    [SerializeField]
+    private HealthBar playerHealthBar;
+
+    [SerializeField]
+    private HealthBar aiHealthBar;
+
     private bool moveToGamePos;
 
     private bool moveToMenuPos;
+
+    private void Awake()
+    {
+        Instance ??= this;
+    }
 
     private void Start()
     {
@@ -92,11 +104,29 @@ public class Menu : MonoBehaviour
         MenuCrab.SetActive(false);
         aiCrab.SetActive(true);
         playerCrab.SetActive(true);
+
+        playerCrab.GetComponent<Animator>().SetTrigger("Reset");
+        aiCrab.GetComponent<Animator>().SetTrigger("Reset");
+
+        playerHealthBar.Reset();
+        aiHealthBar.Reset();
+
+        Invoke(nameof(ActivateAI), 2f);
+    }
+
+    private void ActivateAI()
+    {
+        aiCrab.GetComponent<AiController>().Active = true;
     }
 
     public void ReturnToMainMenu()
     {
         moveToMenuPos = true;
+        MenuCrab.SetActive(true);
+        aiCrab.SetActive(false);
+        playerCrab.SetActive(false);
+
+        aiCrab.GetComponent<AiController>().Active = false;
     }
 
         public void OpenSettings()

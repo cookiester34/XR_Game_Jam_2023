@@ -17,6 +17,9 @@ public class ItemSpawning : MonoBehaviour
 	[SerializeField]
 	public WindowPerson[] windowPersons;
 
+	[SerializeField]
+	public WindowPerson[] windowPersonsAi;
+
 	public List<Throwable> allThrowables = new();
 
 	[SerializeField]
@@ -34,6 +37,11 @@ public class ItemSpawning : MonoBehaviour
 	private void Start()
 	{
 		foreach (var windowPerson in windowPersons)
+		{
+			windowPerson.itemCollectionPoint.ItemSpawning = this;
+		}
+
+		foreach (var windowPerson in windowPersonsAi)
 		{
 			windowPerson.itemCollectionPoint.ItemSpawning = this;
 		}
@@ -62,7 +70,8 @@ public class ItemSpawning : MonoBehaviour
 
 	private bool AttemptObjectSpawn()
 	{
-		var windowPerson = windowPersons.Where(person => !person.IsThrowing && !person.itemCollectionPoint.HasItem).ToList();
+		var windowPerson = windowPersons.Where(person => !person.IsThrowing && !person.itemCollectionPoint.HasItem && person.canSpawn).ToList();
+		windowPerson.AddRange(windowPersonsAi.Where(person => !person.IsThrowing && !person.itemCollectionPoint.HasItem && person.canSpawn).ToList());
 
 		if (windowPerson.Count <= 0) return false;
 
