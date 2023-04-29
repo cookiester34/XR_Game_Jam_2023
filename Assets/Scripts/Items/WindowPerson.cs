@@ -12,21 +12,10 @@ public class WindowPerson : MonoBehaviour
 
 	private Throwable throwable;
 
-	private TimerData timer;
-
-	public bool canSpawn = true;
-
-	private void Start()
-	{
-		timer = Utils.CreateTimer(3f);
-	}
-
 	public void SpawnItem(Throwable item)
 	{
 		IsThrowing = true;
 		throwable = Instantiate(item, transform.position, quaternion.identity);
-		timer.ResetTimer();
-		canSpawn = false;
 	}
 
 	private void Update()
@@ -41,11 +30,6 @@ public class WindowPerson : MonoBehaviour
 				IsThrowing = false;
 				throwable = null;
 			}
-		}
-
-		if (timer.timerDone.value)
-		{
-			canSpawn = true;
 		}
 	}
 }

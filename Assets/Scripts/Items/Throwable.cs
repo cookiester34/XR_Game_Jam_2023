@@ -69,7 +69,7 @@ public class Throwable : MonoBehaviour
 	{
 		if (Throwing)
 		{
-			transform.Rotate(Vector3.forward, 33 * Time.deltaTime);
+			transform.Rotate(-1 * direction * Vector3.forward, 180 * Time.deltaTime);
 			transform.position += new Vector3(direction * throwSpeed, 0, 0);
 			if (Vector3.Distance(transform.position, target) <= 0.02f)
 			{
@@ -107,6 +107,8 @@ public class Throwable : MonoBehaviour
 		{
 			collectionPoint.RemoveItem();
 		}
+
+		collectionPoint = null;
 		timer.Pause();
 		timer.ResetTimer();
 	}

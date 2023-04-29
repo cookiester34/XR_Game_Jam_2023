@@ -79,8 +79,8 @@ public class ItemSpawning : MonoBehaviour
 
 	private bool AttemptObjectSpawn()
 	{
-		var windowPerson = windowPersons.Where(person => !person.IsThrowing && !person.itemCollectionPoint.HasItem && person.canSpawn).ToList();
-		windowPerson.AddRange(windowPersonsAi.Where(person => !person.IsThrowing && !person.itemCollectionPoint.HasItem && person.canSpawn).ToList());
+		var windowPerson = windowPersons.Where(person => !person.IsThrowing && !person.itemCollectionPoint.HasItem && person.itemCollectionPoint.canSpawn).ToList();
+		windowPerson.AddRange(windowPersonsAi.Where(person => !person.IsThrowing && !person.itemCollectionPoint.HasItem && person.itemCollectionPoint.canSpawn).ToList());
 
 		if (windowPerson.Count <= 0) return false;
 
