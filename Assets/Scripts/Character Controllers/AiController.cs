@@ -103,6 +103,5 @@ public class AiController : BaseController
 		{
 			goDirection = transform.position.x > destination.transform.position.x ? Directionality.Right : Directionality.Left;
 		}
-		Debug.Log($"Destination Direction: {goDirection}");
 	}
 }

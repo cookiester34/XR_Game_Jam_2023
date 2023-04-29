@@ -2,106 +2,88 @@
 using CookieUtils.UtilSubHelpers;
 using UnityEngine;
 
-public enum ThrowType
-{
-	Throw,
-	Bounce,
-	Roll
-}
-
 public class Throwable : MonoBehaviour
 {
-	[field: SerializeField]
-	public ThrowType ThrowType { get; set; }
+	[SerializeField]
+	private float throwSpeed;
 
-	[field: SerializeField]
-	public float ThrowSpeed { get; set; }
+	[SerializeField]
+	private float throwDistance;
+	public float ThrowDistance => throwDistance;
 
-	[field: SerializeField]
-	public float ThrowDistance { get; set; }
+	private Vector3 target;
+	private Vector3 rollTarget;
 
-	[field: SerializeField]
-	public SphereCollider collider;
+	private int direction;
 
-	public bool Launched { get; set; }
-
-	private bool slowlyRolling;
-
-	private Vector3 slowRollTarget;
-
-	private float destination;
-
-	private Directionality direction = 0;
+	public bool Throwing { get; set; }
+	private bool rolling;
+	private bool waiting;
 
 	private TimerData timer;
 
+	public ItemCollectionPoint collectionPoint;
+
 	private void Start()
 	{
-		collider.enabled = false;
+		ItemSpawning.Instance.allThrowables.Add(this);
+		timer = Utils.CreateTimer(5f, true);
 	}
 
-	public void Throw(Directionality direction)
+	public void Throw(int direction)
 	{
-		collider.enabled = true;
-		Launched = true;
 		this.direction = direction;
-		destination = transform.position.x + (float)direction * ThrowDistance;
-		switch (ThrowType)
-		{
-			case ThrowType.Roll:
-				transform.position = new Vector3(transform.position.x + (float)direction * 5, -37f, transform.position.z);
-				break;
-			case ThrowType.Bounce:
-				break;
-			case ThrowType.Throw:
-				break;
-		}
+		transform.position += new Vector3(0, -7, 0);
+		target = transform.position + new Vector3(direction * throwDistance, 0,0);
+		Throwing = true;
 	}
 
 	private void Update()
 	{
-		if (Launched)
+		if (Throwing)
 		{
-			if (!CloseEnough())
+			transform.position += new Vector3(direction * throwSpeed, 0, 0);
+			if (Vector3.Distance(transform.position, target) <= 0.2f)
 			{
-				//Debug.Log($"Pos: {transform.position.x}");
-				//transform.position = new Vector3(Utils.EasedLerp(transform.position.x, destination, 0.75f), transform.position.y, transform.position.z);
-				transform.position += new Vector3((float)direction * ThrowSpeed, 0, 0);
-			}
-			else
-			{
-				Launched = false;
-				collider.enabled = false;
-				slowlyRolling = true;
-				slowRollTarget = new Vector3(transform.position.x + (float) direction * 20, -37f,0);
-				timer ??= Utils.CreateTimer(1f);
+				Throwing = false;
+				rolling = true;
+				rollTarget = transform.position + new Vector3(direction * 20f, 0, 0);
 			}
 		}
 
-		if (slowlyRolling)
+		if (rolling)
 		{
-			transform.position = Utils.Smoothstep(transform.position, slowRollTarget, 0.07f);
-			if (Vector3.Distance(transform.position, slowRollTarget) <= 0.1f)
+			transform.position = Utils.Smoothstep(transform.position, rollTarget, 0.07f);
+			if (Vector3.Distance(transform.position, rollTarget) <= 0.2f)
 			{
-				slowlyRolling = false;
+				rolling = false;
+				waiting = true;
+				timer.Unpause();
 			}
-		}
-
-		if (timer?.timerDone)
-		{
-			var collectionPoint = new GameObject("TempColelctionPoint");
-			var itemCollectionPoint = collectionPoint.AddComponent<ItemCollectionPoint>();
-			itemCollectionPoint.SetItem(this);
-			Utils.Spawn(collectionPoint, transform.position, 5f);
 		}
 	}
 
-	private bool CloseEnough()
+	public void PickUp()
 	{
-		if (direction == Directionality.Left)
+		if (collectionPoint != null)
 		{
-			return transform.position.x >= destination;
+			collectionPoint.RemoveItem();
 		}
-		return transform.position.x <= destination;
+		timer.Pause();
+		timer.ResetTimer();
+	}
+
+	private void FixedUpdate()
+	{
+		if (timer.timerDone.value)
+		{
+			DestroyItem();
+		}
+	}
+
+	private void DestroyItem()
+	{
+		ItemSpawning.Instance.allThrowables.Remove(this);
+		Destroy(gameObject);
 	}
 }

@@ -1,4 +1,5 @@
 using CookieUtils.UtilSubHelpers.DataTypes;
+using System;
 using UnityEngine;
 
 namespace CookieUtils.UtilSubHelpers
@@ -11,10 +12,14 @@ namespace CookieUtils.UtilSubHelpers
     {
         public TimerData()
         {
+            Utils.timerDatas.Add(this);
+        }
+
+        private void Awake()
+        {
             timerDone = CreateInstance<BoolData>();
             paused = CreateInstance<BoolData>();
             timeData = CreateInstance<FloatData>();
-            Utils.timerDatas.Add(this);
         }
 
         public FloatData timeData;
@@ -36,7 +41,7 @@ namespace CookieUtils.UtilSubHelpers
             timerDone.value = false;
             timeData.ResetValue();
         }
-        
+
         /// <summary>
         /// initialize timer settings
         ///  - Set timer start time
@@ -69,7 +74,7 @@ namespace CookieUtils.UtilSubHelpers
         {
             timeData.SetMaxValue(val);
         }
-    
+
         /// <summary>
         /// Toggle whether the timer is paused or not.
         /// </summary>
@@ -85,7 +90,7 @@ namespace CookieUtils.UtilSubHelpers
         {
             paused.value = true;
         }
-        
+
         /// <summary>
         /// Unpause the timer.
         /// </summary>

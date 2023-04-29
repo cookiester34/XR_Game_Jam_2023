@@ -35,7 +35,12 @@ public class BaseController : MonoBehaviour
 
     public ItemCollectionPoint nearbyCollectionPoint;
 
-    protected Throwable currentItem; // currentItem = revolver;
+    public Throwable nearbyItem;
+
+    public Throwable currentItem; // currentItem = revolver;
+
+    [field:SerializeField]
+    public bool IsPlayer { get; set; }
 
     public void Move(Directionality direction)
     {
@@ -60,7 +65,7 @@ public class BaseController : MonoBehaviour
 
     public void ThrowItem()
     {
-        currentItem.Throw(facingDirection);
+        currentItem.Throw((int) facingDirection);
         currentItem = null;
     }
 
