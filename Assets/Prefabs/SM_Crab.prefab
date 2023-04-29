@@ -87,6 +87,12 @@ MonoBehaviour:
   movementSpeed: 0.1
   jumpForce: 120
   nearbyCollectionPoint: {fileID: 0}
+  nearbyItem: {fileID: 0}
+  currentItem: {fileID: 0}
+  <IsPlayer>k__BackingField: 0
+  shouldDodgeFromLeft: 0
+  shouldDodgeFromRight: 0
+  isMenuCrab: 0
 --- !u!114 &-4874796335514687623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,6 +211,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Crab_3
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: e3857e27a1dacb34282ec3766110391d,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 00d0736a8ff82e7439a8d3eb8f48310e, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e3857e27a1dacb34282ec3766110391d, type: 3}
 --- !u!4 &8103303571469070291 stripped
