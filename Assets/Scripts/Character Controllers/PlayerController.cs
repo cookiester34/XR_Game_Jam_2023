@@ -38,9 +38,9 @@ public class PlayerController : BaseController
         }
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        base.Update();
+        base.FixedUpdate();
 
         var inputX = moveAction.ReadValue<Vector2>().x;
 

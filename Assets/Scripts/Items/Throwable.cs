@@ -110,7 +110,7 @@ public class Throwable : MonoBehaviour
 		if (hitting != null)
 		{
 			hitting.health -= 1;
-			Debug.Log($"Health: {hitting.health}");
+			//Debug.Log($"Health: {hitting.health}");
 		}
 	}
 }
