@@ -39,7 +39,7 @@ public class Throwable : MonoBehaviour
 	{
 		collisionWarner.GetComponent<CapsuleCollider>().enabled = true;
 		this.direction = direction;
-		transform.position += new Vector3(0, -7, 0);
+		transform.position += new Vector3(0, -0.14f, 0);
 		target = transform.position + new Vector3(direction * throwDistance, 0,0);
 		Throwing = true;
 	}
@@ -49,11 +49,11 @@ public class Throwable : MonoBehaviour
 		if (Throwing)
 		{
 			transform.position += new Vector3(direction * throwSpeed, 0, 0);
-			if (Vector3.Distance(transform.position, target) <= 0.2f)
+			if (Vector3.Distance(transform.position, target) <= 0.02f)
 			{
 				Throwing = false;
 				rolling = true;
-				rollTarget = transform.position + new Vector3(direction * 20f, 0, 0);
+				rollTarget = transform.position + new Vector3(direction * 0.7f, 0, 0);
 			}
 		}
 

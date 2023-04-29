@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 3938339841347884781}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8103303571469070291}
@@ -47,10 +47,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 3.5462494
-  m_Height: 14.982002
+  m_Radius: 0.05
+  m_Height: 0.1
   m_Direction: 0
-  m_Center: {x: -0.0030403137, y: 3.6859436, z: 0}
+  m_Center: {x: 0, y: 0.04, z: 0}
 --- !u!54 &-1256738983168518666
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -87,8 +87,12 @@ MonoBehaviour:
   movementSpeed: 0.1
   jumpForce: 120
   nearbyCollectionPoint: {fileID: 0}
+  nearbyItem: {fileID: 0}
+  currentItem: {fileID: 0}
+  <IsPlayer>k__BackingField: 0
   shouldDodgeFromLeft: 0
   shouldDodgeFromRight: 0
+  isMenuCrab: 0
 --- !u!114 &-4874796335514687623
 MonoBehaviour:
   m_ObjectHideFlags: 0

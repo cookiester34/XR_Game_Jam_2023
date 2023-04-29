@@ -98,7 +98,7 @@ public class BaseController : MonoBehaviour
 
         if (currentItem != null)
         {
-            currentItem.transform.position = transform.position + new Vector3(0, 10, 0);
+            currentItem.transform.position = transform.position + new Vector3(0, 0.15f, 0);
         }
 
         myPosition.SetVector3(transform.position);

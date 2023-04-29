@@ -52,7 +52,7 @@ public class ItemSpawning : MonoBehaviour
 		playerCrabTransform.nearbyItem = null;
 		foreach (var throwable in allThrowables.Where(throwable => !throwable.Throwing))
 		{
-			if (Vector3.Distance(playerCrabTransform.transform.position, throwable.transform.position) <= 15f)
+			if (Vector3.Distance(playerCrabTransform.transform.position, throwable.transform.position) <= 1f)
 			{
 				playerCrabTransform.nearbyItem = throwable;
 				break;

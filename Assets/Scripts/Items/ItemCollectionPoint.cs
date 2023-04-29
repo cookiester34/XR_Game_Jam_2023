@@ -56,7 +56,7 @@ public class ItemCollectionPoint : MonoBehaviour
 	private void Start()
 	{
 		var collider = GetComponent<SphereCollider>();
-		collider.radius = 4f;
+		collider.radius = 0.1f;
 		collider.isTrigger = true;
 	}
 

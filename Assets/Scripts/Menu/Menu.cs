@@ -90,7 +90,7 @@ public class Menu : MonoBehaviour
         moveToGamePos = true;
 
         MenuCrab.SetActive(false);
-        // aiCrab.SetActive(true);
+        aiCrab.SetActive(true);
         playerCrab.SetActive(true);
     }
 
