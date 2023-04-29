@@ -43,7 +43,8 @@ public class Throwable : MonoBehaviour
 	public void Throw(int direction, BaseController controller)
 	{
 		LastController = controller;
-		collisionWarner.GetComponent<CapsuleCollider>().enabled = true;
+		var capsuleCollider = collisionWarner.GetComponent<CapsuleCollider>();
+		if (capsuleCollider != null) capsuleCollider.enabled = true;
 		this.direction = direction;
 		transform.position += new Vector3(0, -0.14f, 0);
 		target = transform.position + new Vector3(direction * throwDistance, 0,0);
@@ -101,7 +102,7 @@ public class Throwable : MonoBehaviour
 		timer.ResetTimer();
 	}
 
-	private void DestroyItem()
+	public void DestroyItem()
 	{
 		ItemSpawning.Instance.allThrowables.Remove(this);
 		Destroy(gameObject);

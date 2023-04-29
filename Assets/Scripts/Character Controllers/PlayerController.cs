@@ -41,6 +41,8 @@ public class PlayerController : BaseController
 
     private void FixedUpdate()
     {
+        if (isDead) return;
+
         base.FixedUpdate();
 
         var inputX = moveAction.ReadValue<Vector2>().x;
