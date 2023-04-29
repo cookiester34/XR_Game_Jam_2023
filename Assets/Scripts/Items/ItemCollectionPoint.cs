@@ -1,6 +1,4 @@
-﻿using System;
-using Unity.Mathematics;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(SphereCollider))]
 public class ItemCollectionPoint : MonoBehaviour
@@ -16,7 +14,15 @@ public class ItemCollectionPoint : MonoBehaviour
 	public void SetItem(Throwable item)
 	{
 		this.item = item;
+		item.collectionPoint = this;
 		HasItem = true;
+	}
+
+	public void RemoveItem()
+	{
+		item = null;
+		HasItem = false;
+		ItemSpawning.NumberOfSpawnedAssets--;
 	}
 
 	public bool TryGetItem(out Throwable item)
@@ -32,6 +38,7 @@ public class ItemCollectionPoint : MonoBehaviour
 		}
 
 		item = this.item;
+		item.PickUp();
 		this.item = null;
 		HasItem = false;
 
@@ -49,14 +56,14 @@ public class ItemCollectionPoint : MonoBehaviour
 	private void Start()
 	{
 		var collider = GetComponent<SphereCollider>();
-		collider.radius = 2f;
+		collider.radius = 4f;
 		collider.isTrigger = true;
 	}
 
 	private void OnTriggerEnter(Collider other)
 	{
 		var crab = other.GetComponent<BaseController>();
-		if (crab != null)
+		if (crab != null && !crab.IsPlayer)
 		{
 			crab.nearbyCollectionPoint = this;
 		}
@@ -65,7 +72,7 @@ public class ItemCollectionPoint : MonoBehaviour
 	private void OnTriggerExit(Collider other)
 	{
 		var crab = other.GetComponent<BaseController>();
-		if (crab != null)
+		if (crab != null && !crab.IsPlayer)
 		{
 			crab.nearbyCollectionPoint = null;
 		}

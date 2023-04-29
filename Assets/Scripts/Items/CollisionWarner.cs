@@ -10,10 +10,10 @@ public class CollisionWarner : MonoBehaviour
         var crabToWarn = other.GetComponentInParent<BaseController>();
         switch (parent.direction)
         {
-            case Directionality.Left:
+            case 1:
                 crabToWarn.shouldDodgeFromLeft = true;
                 break;
-            case Directionality.Right:
+            case -1:
                 crabToWarn.shouldDodgeFromRight = true;
                 break;
         }
