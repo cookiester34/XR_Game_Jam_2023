@@ -104,6 +104,16 @@ public class BaseController : MonoBehaviour
 
     protected void Update()
     {
+
+    }
+
+    protected void FixedUpdate()
+    {
+        if (!IsGrounded())
+        {
+            rigidbody.AddForce(Vector3.down * Time.deltaTime * 491f, ForceMode.VelocityChange);
+        }
+
         var positionX = transform.position.x;
         var opponentX = opponentPosition.GetVector3().x;
 
@@ -122,13 +132,5 @@ public class BaseController : MonoBehaviour
         }
 
         myPosition.SetVector3(transform.position);
-    }
-
-    private void FixedUpdate()
-    {
-        if (!IsGrounded())
-        {
-            rigidbody.AddForce(Vector3.down * Time.deltaTime * 491f, ForceMode.VelocityChange);
-        }
     }
 }

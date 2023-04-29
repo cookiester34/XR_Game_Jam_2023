@@ -9,94 +9,27 @@ public class AiController : BaseController
 
 	private ItemCollectionPoint collectionPointGoTo;
 
+	private Directionality goDirection = 0;
+
 	private TimerData AiJumpTimer;
+
+	private bool doingSomethingRandom = true;
+	private TimerData AiDoingSomethingRandomTimer;
+
+	[SerializeField]
+	private Transform leftRandomPoint;
+	[SerializeField]
+	private Transform rightRandomPoint;
+
+	public Directionality randomDirection = 0;
 
 	private void Awake()
 	{
-		AiJumpTimer = Utils.CreateTimer(0.5f, true);
+		AiJumpTimer = Utils.CreateTimer(0.5f);
 		AiJumpTimer.EndTimer();
-	}
 
-	private void Update()
-	{
-		base.Update();
-
-		// If no item
-			// If being attacked
-				// Wait a random/difficulty time
-				// Dodge that shit
-			// If not
-				// Find nearest item
-				// Pick it up
-		// If yes item
-			// Approach player until close enough (depends on item.traversableDistance)
-			// Wait a random/difficulty time
-			// Throw
-
-		if (currentItem == null)
-		{
-			if (AiJumpTimer.timerDone.value && (shouldDodgeFromLeft || shouldDodgeFromRight))
-			{
-				Jump();
-				AiJumpTimer.ResetTimer();
-			}
-			else if (collectionPointGoTo == null)
-			{
-				FindCollectionPoint();
-			}
-			else
-			{
-				if (nearbyCollectionPoint != null)
-				{
-					PickUp();
-					collectionPointGoTo = null;
-				}
-				else if (collectionPointGoTo != null)
-				{
-					if (collectionPointGoTo.HasItem)
-					{
-						//Move(goDirection);
-					}
-					else
-					{
-						collectionPointGoTo = null;
-					}
-				}
-			}
-		}
-		else
-		{
-			if (shouldDodgeFromLeft)
-			{
-				Move(Directionality.Right);
-			}
-			else if (shouldDodgeFromRight)
-			{
-				Move(Directionality.Left);
-			}
-			else if (facingDirection == Directionality.Left)
-			{
-				if (opponentPosition.GetVector3().x - currentItem.ThrowDistance > transform.position.x)
-				{
-					//Move(Directionality.Left);
-				}
-				else
-				{
-					ThrowItem();
-				}
-			}
-			else
-			{
-				if (opponentPosition.GetVector3().x + currentItem.ThrowDistance < transform.position.x)
-				{
-					//Move(Directionality.Right);
-				}
-				else
-				{
-					ThrowItem();
-				}
-			}
-		}
+		AiDoingSomethingRandomTimer = Utils.CreateTimer(2f);
+		AiDoingSomethingRandomTimer.ResetTimer();
 	}
 
 	private void FindCollectionPoint()
@@ -119,5 +52,115 @@ public class AiController : BaseController
 			}
 		}
 		collectionPointGoTo = destination;
+		if (destination != null)
+		{
+			goDirection = transform.position.x > destination.transform.position.x ? Directionality.Right : Directionality.Left;
+		}
+	}
+
+	private void FixedUpdate()
+	{
+		base.FixedUpdate();
+
+		if (!doingSomethingRandom && Random.Range(0, 500) <= 1)
+		{
+			doingSomethingRandom = true;
+			AiDoingSomethingRandomTimer.ResetTimer();
+			Debug.Log("started being random");
+		}
+
+		if (doingSomethingRandom)
+		{
+			if (!AiDoingSomethingRandomTimer.timerDone.value)
+			{
+				// Move(Random.Range(0, 10) <= 9 ? facingDirection : facingDirection == Directionality.Left ? Directionality.Right : Directionality.Left);
+				if (Vector3.Distance(transform.position, leftRandomPoint.position) <= Vector3.Distance(transform.position, rightRandomPoint.position))
+				{
+					if (randomDirection == 0)
+					{
+						randomDirection = Directionality.Right;
+					}
+					Move(randomDirection);
+				}
+				else
+				{
+					if (randomDirection == 0)
+					{
+						randomDirection = Directionality.Left;
+					}
+					Move(randomDirection);
+				}
+			}
+			else
+			{
+				doingSomethingRandom = false;
+				Debug.Log("stopped being random");
+				randomDirection = 0;
+			}
+		}
+		else if (currentItem == null)
+		{
+			if (AiJumpTimer.timerDone.value && (shouldDodgeFromLeft || shouldDodgeFromRight))
+			{
+				Jump();
+				AiJumpTimer.ResetTimer();
+			}
+			else if (collectionPointGoTo == null)
+			{
+				FindCollectionPoint();
+			}
+			else
+			{
+				if (nearbyCollectionPoint != null)
+				{
+					PickUp();
+					collectionPointGoTo = null;
+				}
+				else if (collectionPointGoTo != null)
+				{
+					if (collectionPointGoTo.HasItem)
+					{
+						Move(goDirection);
+					}
+					else
+					{
+						collectionPointGoTo = null;
+					}
+				}
+			}
+		}
+		else
+		{
+			// if (shouldDodgeFromLeft)
+			// {
+			// 	Move(Directionality.Left);
+			// }
+			// else if (shouldDodgeFromRight)
+			// {
+			// 	Move(Directionality.Right);
+			// }
+			if (facingDirection == Directionality.Left)
+			{
+				if (opponentPosition.GetVector3().x - currentItem.ThrowDistance > transform.position.x)
+				{
+					Move(Directionality.Left);
+				}
+				else
+				{
+					ThrowItem();
+				}
+			}
+			else
+			{
+				if (opponentPosition.GetVector3().x + currentItem.ThrowDistance < transform.position.x)
+				{
+					Move(Directionality.Right);
+				}
+				else
+				{
+					ThrowItem();
+				}
+			}
+		}
 	}
 }
