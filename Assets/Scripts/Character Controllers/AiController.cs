@@ -30,32 +30,6 @@ public class AiController : BaseController
 		AiThrowTimer.EndTimer();
 	}
 
-	private void FindCollectionPoint()
-	{
-		collectionPointGoTo = null;
-		nearbyCollectionPoint = null;
-		ItemCollectionPoint destination = null;
-		foreach (var window in spawnPoints.windowPersonsAi)
-		{
-			if (window.itemCollectionPoint.HasItem)
-			{
-				if (destination == null)
-				{
-					destination = window.itemCollectionPoint;
-				}
-				else if (Vector3.Distance(transform.position, destination.transform.position) > Vector3.Distance(transform.position, window.itemCollectionPoint.transform.position))
-				{
-					destination = window.itemCollectionPoint;
-				}
-			}
-		}
-		collectionPointGoTo = destination;
-		if (destination != null)
-		{
-			goDirection = transform.position.x > destination.transform.position.x ? Directionality.Right : Directionality.Left;
-		}
-	}
-
 	private void FixedUpdate()
 	{
 		if (!Active || isDead) return;
