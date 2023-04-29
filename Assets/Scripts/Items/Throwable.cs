@@ -1,7 +1,6 @@
-﻿using System;
+﻿using CookieUtils;
+using CookieUtils.UtilSubHelpers;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
-using CookieUtils;
 
 public enum ThrowType
 {
@@ -21,19 +20,36 @@ public class Throwable : MonoBehaviour
 	[field: SerializeField]
 	public float ThrowDistance { get; set; }
 
+	[field: SerializeField]
+	public SphereCollider collider;
+
 	public bool Launched { get; set; }
+
+	private bool slowlyRolling;
+
+	private Vector3 slowRollTarget;
+
 	private float destination;
+
 	private Directionality direction = 0;
+
+	private TimerData timer;
+
+	private void Start()
+	{
+		collider.enabled = false;
+	}
 
 	public void Throw(Directionality direction)
 	{
+		collider.enabled = true;
 		Launched = true;
 		this.direction = direction;
 		destination = transform.position.x + (float)direction * ThrowDistance;
 		switch (ThrowType)
 		{
 			case ThrowType.Roll:
-				transform.position = new Vector3(transform.position.x + (float)direction * 5, -38.24215f, transform.position.z);
+				transform.position = new Vector3(transform.position.x + (float)direction * 5, -37f, transform.position.z);
 				break;
 			case ThrowType.Bounce:
 				break;
@@ -55,8 +71,28 @@ public class Throwable : MonoBehaviour
 			else
 			{
 				Launched = false;
-				Debug.Log("Stopped!");
+				collider.enabled = false;
+				slowlyRolling = true;
+				slowRollTarget = new Vector3(transform.position.x + (float) direction * 20, -37f,0);
+				timer ??= Utils.CreateTimer(1f);
 			}
+		}
+
+		if (slowlyRolling)
+		{
+			transform.position = Utils.Smoothstep(transform.position, slowRollTarget, 0.07f);
+			if (Vector3.Distance(transform.position, slowRollTarget) <= 0.1f)
+			{
+				slowlyRolling = false;
+			}
+		}
+
+		if (timer?.timerDone)
+		{
+			var collectionPoint = new GameObject("TempColelctionPoint");
+			var itemCollectionPoint = collectionPoint.AddComponent<ItemCollectionPoint>();
+			itemCollectionPoint.SetItem(this);
+			Utils.Spawn(collectionPoint, transform.position, 5f);
 		}
 	}
 

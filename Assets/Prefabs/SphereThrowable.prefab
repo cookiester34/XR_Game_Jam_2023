@@ -111,5 +111,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <ThrowType>k__BackingField: 2
-  <ThrowSpeed>k__BackingField: 0.1
+  <ThrowSpeed>k__BackingField: 0.3
   <ThrowDistance>k__BackingField: 100
+  collider: {fileID: 954246076362920453}
