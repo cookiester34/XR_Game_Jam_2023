@@ -13,22 +13,30 @@ public class ItemSpawning : MonoBehaviour
 	[SerializeField]
 	private int maxSpawnableObjects;
 
-	private int numberOfSpawnedAssets;
+	public int NumberOfSpawnedAssets { get; set; }
+
+	private void Start()
+	{
+		foreach (var windowPerson in windowPersons)
+		{
+			windowPerson.itemCollectionPoint.ItemSpawning = this;
+		}
+	}
 
 	private void Update()
 	{
-		if (numberOfSpawnedAssets < maxSpawnableObjects)
+		if (NumberOfSpawnedAssets < maxSpawnableObjects)
 		{
 			if (AttemptObjectSpawn())
 			{
-				numberOfSpawnedAssets++;
+				NumberOfSpawnedAssets++;
 			}
 		}
 	}
 
 	private bool AttemptObjectSpawn()
 	{
-		var windowPerson = windowPersons.Where(person => !person.IsThrowing).ToList();
+		var windowPerson = windowPersons.Where(person => !person.IsThrowing && !person.itemCollectionPoint.HasItem).ToList();
 
 		if (windowPerson.Count <= 0) return false;
 
