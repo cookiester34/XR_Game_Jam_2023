@@ -33,6 +33,9 @@ public class BaseController : MonoBehaviour
     [SerializeField]
     private float jumpForce;
 
+    [SerializeField]
+    protected Animator animator;
+
     public ItemCollectionPoint nearbyCollectionPoint;
 
     public Throwable nearbyItem;
@@ -47,6 +50,10 @@ public class BaseController : MonoBehaviour
 
     public void Move(Directionality direction)
     {
+        if (!IsPlayer)
+        {
+            animator.SetInteger("MovementDirection", (int) direction);
+        }
         transform.position = new Vector3(transform.position.x + (float)direction * movementSpeed, transform.position.y, transform.position.z);
     }
 
@@ -54,6 +61,7 @@ public class BaseController : MonoBehaviour
     {
         if (IsGrounded() && transform.position.y <= -34f)
         {
+            animator.SetTrigger("Jump");
             rigidbody.AddForce(0, jumpForce, 0, ForceMode.VelocityChange);
         }
     }
@@ -64,9 +72,21 @@ public class BaseController : MonoBehaviour
         {
             Debug.LogError("Didn't get item");
         }
+        else
+        {
+            animator.SetBool("IsHolding", true);
+        }
     }
 
     public void ThrowItem()
+    {
+        animator.SetBool("IsHolding", false);
+        animator.SetTrigger("Throw");
+
+        Invoke(nameof(TheRealThrow), 0.15f);
+    }
+
+    private void TheRealThrow()
     {
         currentItem.Throw((int) facingDirection);
         currentItem = null;

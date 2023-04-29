@@ -31,6 +31,7 @@ public class PlayerController : BaseController
         {
             nearbyItem.PickUp();
             currentItem = nearbyItem;
+            animator.SetBool("IsHolding", true);
         }
         else
         {
@@ -43,6 +44,8 @@ public class PlayerController : BaseController
         base.Update();
 
         var inputX = moveAction.ReadValue<Vector2>().x;
+        var x = (int)inputX;
+        animator.SetInteger("MovementDirection", x);
 
         switch (inputX)
         {
