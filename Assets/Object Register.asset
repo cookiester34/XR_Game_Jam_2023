@@ -13,4 +13,8 @@ MonoBehaviour:
   m_Name: Object Register
   m_EditorClassIdentifier: 
   <Throwables>k__BackingField:
+  - {fileID: 8529094240007822706, guid: 37ce5617f635ab14ea8f414ee332768b, type: 3}
+  - {fileID: 8529094240007822706, guid: 80c897264db2d5d40ba7929489015eb7, type: 3}
+  - {fileID: 8529094240007822706, guid: dea2f77f815db774781e015c56988ed7, type: 3}
+  - {fileID: 8529094240007822706, guid: 3da12d61d0f2e2a4d93fe569428ba5ff, type: 3}
   - {fileID: 8529094240007822706, guid: 049870b715db24e45a3755f0dda318bf, type: 3}

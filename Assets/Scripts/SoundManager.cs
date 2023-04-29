@@ -32,7 +32,7 @@ public class SoundManager : MonoBehaviour
         backgroundAudioSource.Play();
     }
 
-    private void triggerSoundEffect(AudioClip soundEffect)
+    public void triggerSoundEffect(AudioClip soundEffect)
     {
         soundEffectsAudioSource.clip = soundEffect;
         soundEffectsAudioSource.Play();

@@ -68,6 +68,15 @@ public class ItemSpawning : MonoBehaviour
 		}
 	}
 
+	public void Reset()
+	{
+		for (int i = 0; i < allThrowables.Count; i++)
+		{
+			allThrowables[i].DestroyItem();
+		}
+		allThrowables.Clear();
+	}
+
 	private bool AttemptObjectSpawn()
 	{
 		var windowPerson = windowPersons.Where(person => !person.IsThrowing && !person.itemCollectionPoint.HasItem && person.canSpawn).ToList();

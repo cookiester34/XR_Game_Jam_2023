@@ -2,6 +2,7 @@ using System;
 using CookieUtils.UtilSubHelpers.DataTypes;
 using CookieUtils;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public enum Directionality
 {
@@ -39,6 +40,9 @@ public class BaseController : MonoBehaviour
     [SerializeField]
     private HealthBar healthBar;
 
+    [SerializeField]
+    private AudioClip scuttleSound;
+
     public ItemCollectionPoint nearbyCollectionPoint;
 
     public Throwable nearbyItem;
@@ -55,6 +59,10 @@ public class BaseController : MonoBehaviour
 
     public void Move(Directionality direction)
     {
+        if (Random.Range(0, 100) <= 2)
+        {
+            SoundManager.instance.triggerSoundEffect(scuttleSound);
+        }
         if (!IsPlayer)
         {
             animator.SetInteger("MovementDirection", (int) direction);

@@ -17,6 +17,12 @@ public class Throwable : MonoBehaviour
 	[SerializeField]
 	private SphereCollider collider;
 
+	[SerializeField]
+	private AudioClip soundEffect;
+
+	[SerializeField]
+	private AudioClip soundEffectPickup;
+
 	public bool Launched { get; set; }
 
 	private Vector3 target;
@@ -50,6 +56,7 @@ public class Throwable : MonoBehaviour
 		target = transform.position + new Vector3(direction * throwDistance, 0,0);
 		Throwing = true;
 		Launched = true;
+		if (soundEffect != null) SoundManager.instance.triggerSoundEffect(soundEffect);
 		Invoke(nameof(delayedColliderEnabled), 0.1f);
 	}
 
@@ -62,6 +69,7 @@ public class Throwable : MonoBehaviour
 	{
 		if (Throwing)
 		{
+			transform.Rotate(Vector3.forward, 33 * Time.deltaTime);
 			transform.position += new Vector3(direction * throwSpeed, 0, 0);
 			if (Vector3.Distance(transform.position, target) <= 0.02f)
 			{
@@ -94,6 +102,7 @@ public class Throwable : MonoBehaviour
 
 	public void PickUp()
 	{
+		if (soundEffect != null) SoundManager.instance.triggerSoundEffect(soundEffectPickup);
 		if (collectionPoint != null)
 		{
 			collectionPoint.RemoveItem();
