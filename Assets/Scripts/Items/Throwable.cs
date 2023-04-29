@@ -46,6 +46,11 @@ public class Throwable : MonoBehaviour
 		target = transform.position + new Vector3(direction * throwDistance, 0,0);
 		Throwing = true;
 		Launched = true;
+		Invoke(nameof(delayedColliderEnabled), 0.1f);
+	}
+
+	private void delayedColliderEnabled()
+	{
 		collider.enabled = true;
 	}
 

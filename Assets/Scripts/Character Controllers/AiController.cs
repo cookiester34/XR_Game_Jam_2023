@@ -16,6 +16,8 @@ public class AiController : BaseController
 	private bool doingSomethingRandom = true;
 	private TimerData AiDoingSomethingRandomTimer;
 
+	private TimerData AiThrowTimer;
+
 	[SerializeField]
 	private Transform leftRandomPoint;
 	[SerializeField]
@@ -30,6 +32,9 @@ public class AiController : BaseController
 
 		AiDoingSomethingRandomTimer = Utils.CreateTimer(2f);
 		AiDoingSomethingRandomTimer.ResetTimer();
+
+		AiThrowTimer = Utils.CreateTimer(1f);
+		AiThrowTimer.EndTimer();
 	}
 
 	private void FindCollectionPoint()
@@ -62,7 +67,7 @@ public class AiController : BaseController
 	{
 		base.FixedUpdate();
 
-		if (!doingSomethingRandom && Random.Range(0, 500) <= 1)
+		if (!doingSomethingRandom && Random.Range(0, 400) <= 1)
 		{
 			doingSomethingRandom = true;
 			AiDoingSomethingRandomTimer.ResetTimer();
@@ -131,23 +136,16 @@ public class AiController : BaseController
 		}
 		else
 		{
-			// if (shouldDodgeFromLeft)
-			// {
-			// 	Move(Directionality.Left);
-			// }
-			// else if (shouldDodgeFromRight)
-			// {
-			// 	Move(Directionality.Right);
-			// }
 			if (facingDirection == Directionality.Left)
 			{
 				if (opponentPosition.GetVector3().x - currentItem.ThrowDistance > transform.position.x)
 				{
 					Move(Directionality.Left);
 				}
-				else
+				else if (AiThrowTimer.timerDone.value)
 				{
 					ThrowItem();
+					AiThrowTimer.ResetTimer();
 				}
 			}
 			else
@@ -156,9 +154,10 @@ public class AiController : BaseController
 				{
 					Move(Directionality.Right);
 				}
-				else
+				else if (AiThrowTimer.timerDone.value)
 				{
 					ThrowItem();
+					AiThrowTimer.ResetTimer();
 				}
 			}
 		}
