@@ -117,6 +117,8 @@ public class Throwable : MonoBehaviour
 		{
 			baseController.TakeDamage();
 			DestroyItem();
+			baseController.shouldDodgeFromLeft = false;
+			baseController.shouldDodgeFromRight = false;
 			//Debug.Log($"Health: {hitting.health}");
 		}
 	}

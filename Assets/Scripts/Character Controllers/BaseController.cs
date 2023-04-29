@@ -71,15 +71,17 @@ public class BaseController : MonoBehaviour
         }
     }
 
-    public void PickUp()
+    public bool PickUp()
     {
         if (!nearbyCollectionPoint.TryGetItem(out currentItem))
         {
-            Debug.LogError("Didn't get item");
+            //Debug.LogError("Didn't get item");
+            return false;
         }
         else
         {
             animator.SetBool("IsHolding", true);
+            return true;
         }
     }
 
@@ -93,7 +95,7 @@ public class BaseController : MonoBehaviour
 
     private void TheRealThrow()
     {
-        currentItem.Throw((int) facingDirection, this);
+        currentItem?.Throw((int) facingDirection, this);
         currentItem = null;
     }
 

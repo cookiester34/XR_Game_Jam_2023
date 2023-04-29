@@ -7,10 +7,13 @@ public class AiController : BaseController
 	[SerializeField]
 	private ItemSpawning spawnPoints;
 
-
 	private TimerData AiJumpTimer;
 
 	private TimerData AiThrowTimer;
+
+	private TimerData AiPickUpTimer;
+
+	private TimerData AiRandomTimer;
 
 	[SerializeField]
 	private Transform leftRandomPoint;
@@ -26,8 +29,11 @@ public class AiController : BaseController
 		AiJumpTimer = Utils.CreateTimer(0.5f);
 		AiJumpTimer.EndTimer();
 
-		AiThrowTimer = Utils.CreateTimer(1.4f);
+		AiThrowTimer = Utils.CreateTimer(3f);
 		AiThrowTimer.EndTimer();
+
+		AiPickUpTimer = Utils.CreateTimer(3.5f);
+		AiPickUpTimer.EndTimer();
 	}
 
 	private void FixedUpdate()
@@ -36,19 +42,23 @@ public class AiController : BaseController
 
 		base.FixedUpdate();
 
-		if (currentItem == null || !AiThrowTimer.timerDone.value)
+		if (currentItem == null)
 		{
 			Move(randomDirection);
 
 			if (AiJumpTimer.timerDone.value && (shouldDodgeFromLeft || shouldDodgeFromRight))
 			{
-				Jump();
-				AiJumpTimer.ResetTimer();
+				if (Random.Range(0, 10) <= 1)
+				{
+					Jump();
+					AiJumpTimer.ResetTimer();
+				}
 			}
 
-			if (nearbyCollectionPoint != null)
+			if (AiPickUpTimer.timerDone.value && nearbyCollectionPoint != null)
 			{
-				PickUp();
+				var successfulPickUp = PickUp();
+				if (successfulPickUp) AiPickUpTimer.ResetTimer();
 			}
 
 		}
@@ -62,9 +72,9 @@ public class AiController : BaseController
 				}
 				else if (AiThrowTimer.timerDone.value)
 				{
+					//Debug.Log("throwing");
 					ThrowItem();
 					AiThrowTimer.ResetTimer();
-					randomDirection = Directionality.Right;
 				}
 			}
 			else
@@ -75,9 +85,9 @@ public class AiController : BaseController
 				}
 				else if (AiThrowTimer.timerDone.value)
 				{
+					//Debug.Log("throwing");
 					ThrowItem();
 					AiThrowTimer.ResetTimer();
-					randomDirection = Directionality.Right;
 				}
 			}
 		}
