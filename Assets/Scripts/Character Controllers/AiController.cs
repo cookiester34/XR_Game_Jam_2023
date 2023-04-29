@@ -7,14 +7,8 @@ public class AiController : BaseController
 	[SerializeField]
 	private ItemSpawning spawnPoints;
 
-	private ItemCollectionPoint collectionPointGoTo;
-
-	private Directionality goDirection = 0;
 
 	private TimerData AiJumpTimer;
-
-	private bool doingSomethingRandom = true;
-	private TimerData AiDoingSomethingRandomTimer;
 
 	private TimerData AiThrowTimer;
 
@@ -22,110 +16,37 @@ public class AiController : BaseController
 	private Transform leftRandomPoint;
 	[SerializeField]
 	private Transform rightRandomPoint;
-
-	public Directionality randomDirection = Directionality.Left;
+	[SerializeField]
+	public Directionality randomDirection = Directionality.Right;
 
 	private void Awake()
 	{
 		AiJumpTimer = Utils.CreateTimer(0.5f);
 		AiJumpTimer.EndTimer();
 
-		AiDoingSomethingRandomTimer = Utils.CreateTimer(2f);
-		AiDoingSomethingRandomTimer.ResetTimer();
-
 		AiThrowTimer = Utils.CreateTimer(1.4f);
 		AiThrowTimer.EndTimer();
-	}
-
-	private void FindCollectionPoint()
-	{
-		collectionPointGoTo = null;
-		nearbyCollectionPoint = null;
-		ItemCollectionPoint destination = null;
-		foreach (var window in spawnPoints.windowPersons)
-		{
-			if (window.itemCollectionPoint.HasItem)
-			{
-				if (destination == null)
-				{
-					destination = window.itemCollectionPoint;
-				}
-				else if (Vector3.Distance(transform.position, destination.transform.position) > Vector3.Distance(transform.position, window.itemCollectionPoint.transform.position))
-				{
-					destination = window.itemCollectionPoint;
-				}
-			}
-		}
-		collectionPointGoTo = destination;
-		if (destination != null)
-		{
-			goDirection = transform.position.x > destination.transform.position.x ? Directionality.Right : Directionality.Left;
-		}
 	}
 
 	private void FixedUpdate()
 	{
 		base.FixedUpdate();
 
-		if (!doingSomethingRandom && Random.Range(0, 400) <= 1)
+		if (currentItem == null || !AiThrowTimer.timerDone.value)
 		{
-			doingSomethingRandom = true;
-			AiDoingSomethingRandomTimer.ResetTimer();
-			Debug.Log("started being random");
-		}
+			Move(randomDirection);
 
-		if (doingSomethingRandom)
-		{
-			if (!AiDoingSomethingRandomTimer.timerDone.value)
-			{
-				// Move(Random.Range(0, 10) <= 9 ? facingDirection : facingDirection == Directionality.Left ? Directionality.Right : Directionality.Left);
-				if (Vector3.Distance(transform.position, leftRandomPoint.position) <= 0.5f)
-				{
-					randomDirection = Directionality.Right;
-					Move(randomDirection);
-				}
-				else if (Vector3.Distance(transform.position, rightRandomPoint.position) <= 0.5f)
-				{
-					randomDirection = Directionality.Left;
-					Move(randomDirection);
-				}
-			}
-			else
-			{
-				doingSomethingRandom = false;
-				Debug.Log("stopped being random");
-			}
-		}
-		else if (currentItem == null)
-		{
 			if (AiJumpTimer.timerDone.value && (shouldDodgeFromLeft || shouldDodgeFromRight))
 			{
 				Jump();
 				AiJumpTimer.ResetTimer();
 			}
-			if (collectionPointGoTo == null)
+
+			if (nearbyCollectionPoint != null)
 			{
-				FindCollectionPoint();
+				PickUp();
 			}
-			else
-			{
-				if (nearbyCollectionPoint != null)
-				{
-					PickUp();
-					collectionPointGoTo = null;
-				}
-				else if (collectionPointGoTo != null)
-				{
-					if (collectionPointGoTo.HasItem)
-					{
-						Move(goDirection);
-					}
-					else
-					{
-						collectionPointGoTo = null;
-					}
-				}
-			}
+
 		}
 		else
 		{
@@ -139,6 +60,7 @@ public class AiController : BaseController
 				{
 					ThrowItem();
 					AiThrowTimer.ResetTimer();
+					randomDirection = Directionality.Right;
 				}
 			}
 			else
@@ -151,6 +73,7 @@ public class AiController : BaseController
 				{
 					ThrowItem();
 					AiThrowTimer.ResetTimer();
+					randomDirection = Directionality.Right;
 				}
 			}
 		}
