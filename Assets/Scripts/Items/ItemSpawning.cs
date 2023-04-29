@@ -1,19 +1,35 @@
 using CookieUtils;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class ItemSpawning : MonoBehaviour
 {
+	public static ItemSpawning Instance { get; private set; }
+
 	[SerializeField]
 	private ObjectRegister objectRegister;
 
 	[SerializeField]
+	private PlayerController playerCrabTransform;
+
+	[SerializeField]
 	public WindowPerson[] windowPersons;
+
+	public List<Throwable> allThrowables = new();
 
 	[SerializeField]
 	private int maxSpawnableObjects;
 
+	[field:SerializeField]
 	public int NumberOfSpawnedAssets { get; set; }
+
+	private void Awake()
+	{
+		Instance ??= this;
+		Utils.CreateMonoHelper();
+	}
 
 	private void Start()
 	{
@@ -30,6 +46,16 @@ public class ItemSpawning : MonoBehaviour
 			if (AttemptObjectSpawn())
 			{
 				NumberOfSpawnedAssets++;
+			}
+		}
+
+		playerCrabTransform.nearbyItem = null;
+		foreach (var throwable in allThrowables.Where(throwable => !throwable.Throwing))
+		{
+			if (Vector3.Distance(playerCrabTransform.transform.position, throwable.transform.position) <= 15f)
+			{
+				playerCrabTransform.nearbyItem = throwable;
+				break;
 			}
 		}
 	}

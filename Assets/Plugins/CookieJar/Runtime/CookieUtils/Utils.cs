@@ -17,7 +17,7 @@ namespace CookieUtils
         /// <summary>
         ///     Creates the MonoUtils class if there isn't one in the scene.
         /// </summary>
-        private static void CreateMonoHelper()
+        public static void CreateMonoHelper()
 		{
 			if (RefMonoUtils != null) return;
 			var utils = new GameObject("MonoHelper");

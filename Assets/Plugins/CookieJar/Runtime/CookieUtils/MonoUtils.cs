@@ -42,8 +42,8 @@ namespace CookieUtils
 
 		private void FixedUpdate()
 		{
-			UpdateTimers();
 			DontDestroyOnLoad(this);
+			UpdateTimers();
 		}
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace CookieUtils
         /// </summary>
         public void PauseAllTimers()
 		{
-			TimersPaused = false;
+			TimersPaused = true;
 		}
 
         /// <summary>

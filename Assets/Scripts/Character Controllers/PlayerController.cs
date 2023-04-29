@@ -3,6 +3,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : BaseController
 {
+    public bool isMenuCrab;
+
     private PlayerInput playerInput;
     private InputAction moveAction;
     private InputAction jumpthrowpickupAction;
@@ -25,9 +27,10 @@ public class PlayerController : BaseController
         {
             ThrowItem();
         }
-        else if (nearbyCollectionPoint != null)
+        else if (nearbyItem != null)
         {
-            PickUp();
+            nearbyItem.PickUp();
+            currentItem = nearbyItem;
         }
         else
         {

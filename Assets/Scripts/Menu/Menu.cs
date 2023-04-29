@@ -32,6 +32,9 @@ public class Menu : MonoBehaviour
     private Transform aiCrabStartPosition;
 
     [SerializeField]
+    private GameObject MenuCrab;
+
+    [SerializeField]
     private UIMotion[] startEffects;
 
     private bool moveToGamePos;
@@ -45,6 +48,10 @@ public class Menu : MonoBehaviour
         Invoke(nameof(TriggerUIAnims), 0.5f);
 
         cameraTransform.position = menuCameraPosition.position;
+
+        MenuCrab.SetActive(true);
+        aiCrab.SetActive(false);
+        playerCrab.SetActive(false);
     }
 
     private void Update()
@@ -81,6 +88,10 @@ public class Menu : MonoBehaviour
         playerCrab.transform.position = playerCrabStartPosition.position;
         aiCrab.transform.position = aiCrabStartPosition.position;
         moveToGamePos = true;
+
+        MenuCrab.SetActive(false);
+        // aiCrab.SetActive(true);
+        playerCrab.SetActive(true);
     }
 
     public void ReturnToMainMenu()
