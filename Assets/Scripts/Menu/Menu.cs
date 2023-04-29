@@ -75,7 +75,7 @@ public class Menu : MonoBehaviour
         if (moveToGamePos)
         {
             cameraTransform.position = CookieUtils.Utils.Smootherstep(cameraTransform.position, GameCameraPosition.position, 0.23f);
-            if (Vector3.Distance(cameraTransform.position, GameCameraPosition.position) <= 0.1f)
+            if (Vector3.Distance(cameraTransform.position, GameCameraPosition.position) <= 0.01f)
             {
                 moveToGamePos = false;
             }
@@ -84,7 +84,7 @@ public class Menu : MonoBehaviour
         if (moveToMenuPos)
         {
             cameraTransform.position = CookieUtils.Utils.Smootherstep(cameraTransform.position, menuCameraPosition.position, 0.23f);
-            if (Vector3.Distance(cameraTransform.position, menuCameraPosition.position) <= 0.1f)
+            if (Vector3.Distance(cameraTransform.position, menuCameraPosition.position) <= 0.01f)
             {
                 moveToMenuPos = false;
             }
