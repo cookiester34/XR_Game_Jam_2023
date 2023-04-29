@@ -14,6 +14,9 @@ public class Throwable : MonoBehaviour
 	[field: SerializeField]
 	public CapsuleCollider collisionWarner;
 
+	[SerializeField]
+	private SphereCollider collider;
+
 	public bool Launched { get; set; }
 
 	private Vector3 target;
@@ -42,6 +45,8 @@ public class Throwable : MonoBehaviour
 		transform.position += new Vector3(0, -0.14f, 0);
 		target = transform.position + new Vector3(direction * throwDistance, 0,0);
 		Throwing = true;
+		Launched = true;
+		collider.enabled = true;
 	}
 
 	private void Update()
@@ -66,6 +71,8 @@ public class Throwable : MonoBehaviour
 				waiting = true;
 				timer.Unpause();
 				collisionWarner.GetComponent<CapsuleCollider>().enabled = false;
+				collider.enabled = false;
+				Launched = false;
 			}
 
 		}

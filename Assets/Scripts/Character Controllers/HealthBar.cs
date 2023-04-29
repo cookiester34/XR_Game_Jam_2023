@@ -31,14 +31,22 @@ public class HealthBar : MonoBehaviour
         }
         if (crab.health < health)
         {
-            var sprite = heartSprites[health - 1].GetComponent<SpriteRenderer>();
-            sprite.sprite = EmptyHeart;
+            if (health - 1 >= 0 && health - 1 < heartSprites.Length)
+            {
+                var sprite = heartSprites[health - 1].GetComponent<SpriteRenderer>();
+                sprite.sprite = EmptyHeart;
+            }
+
             health -= 1;
         }
         else if (health < 5)
         {
-            var sprite = heartSprites[health].GetComponent<SpriteRenderer>();
-            sprite.sprite = FullHeart;
+            if (health >= 0 && health < heartSprites.Length)
+            {
+                var sprite = heartSprites[health].GetComponent<SpriteRenderer>();
+                sprite.sprite = FullHeart;
+            }
+
             health += 1;
         }
         else

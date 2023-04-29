@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 9049623292132401705}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5186215651678024063}
@@ -45,10 +45,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 3.5462494
-  m_Height: 14.982002
+  m_Radius: 0.05
+  m_Height: 0.1
   m_Direction: 0
-  m_Center: {x: -0.0030403137, y: 3.6859436, z: 0}
+  m_Center: {x: 0, y: 0.04, z: 0}
 --- !u!54 &-192073338855066319
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -82,8 +82,8 @@ MonoBehaviour:
   opponentPosition: {fileID: 11400000, guid: b1020d4be2e497c45b3154343aa8d328, type: 2}
   startingDirection: -1
   health: 5
-  movementSpeed: 0.1
-  jumpForce: 120
+  movementSpeed: 0.003
+  jumpForce: 2.5
   nearbyCollectionPoint: {fileID: 0}
   nearbyItem: {fileID: 0}
   currentItem: {fileID: 0}

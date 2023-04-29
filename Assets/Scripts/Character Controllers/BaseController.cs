@@ -52,7 +52,7 @@ public class BaseController : MonoBehaviour
 
     public void Jump()
     {
-        if (IsGrounded())
+        if (IsGrounded() && transform.position.y <= -34f)
         {
             rigidbody.AddForce(0, jumpForce, 0, ForceMode.VelocityChange);
         }
@@ -74,7 +74,7 @@ public class BaseController : MonoBehaviour
 
     private bool IsGrounded()
     {
-        return Physics.Raycast(transform.position + Vector3.up, Vector3.down, 4);
+        return Physics.Raycast(transform.position + Vector3.up, Vector3.down, 1f);
     }
 
     private void Start()

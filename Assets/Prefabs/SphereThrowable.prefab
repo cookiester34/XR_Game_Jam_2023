@@ -114,6 +114,7 @@ MonoBehaviour:
   throwSpeed: 0.007
   throwDistance: 1
   collisionWarner: {fileID: 5514576726751247218}
+  collider: {fileID: 954246076362920453}
   direction: 0
   collectionPoint: {fileID: 0}
 --- !u!1 &3388188640340906364

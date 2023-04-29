@@ -1,6 +1,6 @@
-using Unity.VisualScripting;
+using CookieUtils;
+using CookieUtils.UtilSubHelpers;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
 public class AiController : BaseController
 {
@@ -8,7 +8,14 @@ public class AiController : BaseController
 	private ItemSpawning spawnPoints;
 
 	private ItemCollectionPoint collectionPointGoTo;
-	private Directionality goDirection;
+
+	private TimerData AiJumpTimer;
+
+	private void Awake()
+	{
+		AiJumpTimer = Utils.CreateTimer(0.5f, true);
+		AiJumpTimer.EndTimer();
+	}
 
 	private void Update()
 	{
@@ -28,10 +35,10 @@ public class AiController : BaseController
 
 		if (currentItem == null)
 		{
-			if (shouldDodgeFromLeft || shouldDodgeFromRight)
+			if (AiJumpTimer.timerDone.value && (shouldDodgeFromLeft || shouldDodgeFromRight))
 			{
 				Jump();
-				Debug.Log("Jumped once.");
+				AiJumpTimer.ResetTimer();
 			}
 			else if (collectionPointGoTo == null)
 			{
@@ -112,9 +119,5 @@ public class AiController : BaseController
 			}
 		}
 		collectionPointGoTo = destination;
-		if (destination != null)
-		{
-			goDirection = transform.position.x > destination.transform.position.x ? Directionality.Right : Directionality.Left;
-		}
 	}
 }
