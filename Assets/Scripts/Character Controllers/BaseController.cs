@@ -37,6 +37,9 @@ public class BaseController : MonoBehaviour
 
     protected Throwable currentItem; // currentItem = revolver;
 
+    public bool shouldDodgeFromLeft;
+    public bool shouldDodgeFromRight;
+
     public void Move(Directionality direction)
     {
         transform.position = new Vector3(transform.position.x + (float)direction * movementSpeed, transform.position.y, transform.position.z);

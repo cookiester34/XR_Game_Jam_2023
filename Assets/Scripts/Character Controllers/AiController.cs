@@ -28,7 +28,12 @@ public class AiController : BaseController
 
 		if (currentItem == null)
 		{
-			if (collectionPointGoTo == null)
+			if (shouldDodgeFromLeft || shouldDodgeFromRight)
+			{
+				Jump();
+				Debug.Log("Jumped once.");
+			}
+			else if (collectionPointGoTo == null)
 			{
 				FindCollectionPoint();
 			}
@@ -43,7 +48,7 @@ public class AiController : BaseController
 				{
 					if (collectionPointGoTo.HasItem)
 					{
-						Move(goDirection);
+						//Move(goDirection);
 					}
 					else
 					{
@@ -54,11 +59,19 @@ public class AiController : BaseController
 		}
 		else
 		{
-			if (facingDirection == Directionality.Left)
+			if (shouldDodgeFromLeft)
+			{
+				Move(Directionality.Right);
+			}
+			else if (shouldDodgeFromRight)
+			{
+				Move(Directionality.Left);
+			}
+			else if (facingDirection == Directionality.Left)
 			{
 				if (opponentPosition.GetVector3().x - currentItem.ThrowDistance > transform.position.x)
 				{
-					Move(Directionality.Left);
+					//Move(Directionality.Left);
 				}
 				else
 				{
@@ -69,7 +82,7 @@ public class AiController : BaseController
 			{
 				if (opponentPosition.GetVector3().x + currentItem.ThrowDistance < transform.position.x)
 				{
-					Move(Directionality.Right);
+					//Move(Directionality.Right);
 				}
 				else
 				{
@@ -103,6 +116,5 @@ public class AiController : BaseController
 		{
 			goDirection = transform.position.x > destination.transform.position.x ? Directionality.Right : Directionality.Left;
 		}
-		Debug.Log($"Destination Direction: {goDirection}");
 	}
 }
