@@ -94,4 +94,16 @@ public class Throwable : MonoBehaviour
 		ItemSpawning.Instance.allThrowables.Remove(this);
 		Destroy(gameObject);
 	}
+
+	private void OnTriggerEnter(Collider other)
+	{
+		if (!Launched) return;
+
+		var hitting = other.GetComponentInParent<BaseController>();
+		if (hitting != null)
+		{
+			hitting.health -= 1;
+			Debug.Log($"Health: {hitting.health}");
+		}
+	}
 }
