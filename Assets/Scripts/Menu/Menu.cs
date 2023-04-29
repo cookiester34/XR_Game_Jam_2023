@@ -1,4 +1,5 @@
 using ModularMotion;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class Menu : MonoBehaviour
@@ -44,6 +45,9 @@ public class Menu : MonoBehaviour
     [SerializeField]
     private HealthBar aiHealthBar;
 
+    [SerializeField]
+    private Animator animatorRef;
+
     private bool moveToGamePos;
 
     private bool moveToMenuPos;
@@ -66,11 +70,11 @@ public class Menu : MonoBehaviour
         playerCrab.SetActive(false);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (moveToGamePos)
         {
-            cameraTransform.position = CookieUtils.Utils.Smootherstep(cameraTransform.position, GameCameraPosition.position, 0.13f);
+            cameraTransform.position = CookieUtils.Utils.Smootherstep(cameraTransform.position, GameCameraPosition.position, 0.23f);
             if (Vector3.Distance(cameraTransform.position, GameCameraPosition.position) <= 0.1f)
             {
                 moveToGamePos = false;
@@ -79,7 +83,7 @@ public class Menu : MonoBehaviour
 
         if (moveToMenuPos)
         {
-            cameraTransform.position = CookieUtils.Utils.Smootherstep(cameraTransform.position, menuCameraPosition.position, 0.13f);
+            cameraTransform.position = CookieUtils.Utils.Smootherstep(cameraTransform.position, menuCameraPosition.position, 0.23f);
             if (Vector3.Distance(cameraTransform.position, menuCameraPosition.position) <= 0.1f)
             {
                 moveToMenuPos = false;
@@ -95,8 +99,9 @@ public class Menu : MonoBehaviour
         }
     }
 
-    public void PlayGame()
+    public async void PlayGame()
     {
+        moveToMenuPos = false;
         playerCrab.transform.position = playerCrabStartPosition.position;
         aiCrab.transform.position = aiCrabStartPosition.position;
         moveToGamePos = true;

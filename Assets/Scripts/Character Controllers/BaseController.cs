@@ -34,7 +34,7 @@ public class BaseController : MonoBehaviour
     private float jumpForce;
 
     [SerializeField]
-    protected Animator animator;
+    public Animator animator;
 
     [SerializeField]
     private HealthBar healthBar;
@@ -111,10 +111,15 @@ public class BaseController : MonoBehaviour
 
     protected void Update()
     {
-        if (health <= 0)
+        if (health <= 0 && !isDead)
         {
-            animator.SetTrigger("Died");
+            animator.SetTrigger("Dead");
             isDead = true;
+            if (currentItem != null)
+            {
+                currentItem.DestroyItem();
+                currentItem = null;
+            }
             Invoke(nameof(ResturnToMenu), 3f);
         }
     }
