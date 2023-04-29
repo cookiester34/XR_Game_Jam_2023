@@ -19,7 +19,7 @@ public class Throwable : MonoBehaviour
 	private Vector3 target;
 	private Vector3 rollTarget;
 
-	private int direction;
+	public int direction;
 
 	public bool Throwing { get; set; }
 	private bool rolling;
