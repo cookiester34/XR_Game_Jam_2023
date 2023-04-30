@@ -1,6 +1,5 @@
 ﻿using CookieUtils;
 using CookieUtils.UtilSubHelpers;
-using System;
 using UnityEngine;
 
 [RequireComponent(typeof(SphereCollider))]
@@ -18,6 +17,8 @@ public class ItemCollectionPoint : MonoBehaviour
 
 	private TimerData timer;
 
+	private TimerData deleteItemTimer;
+
 	public void SetItem(Throwable item)
 	{
 		this.item = item;
@@ -31,6 +32,7 @@ public class ItemCollectionPoint : MonoBehaviour
 		HasItem = false;
 		ItemSpawning.NumberOfSpawnedAssets--;
 		timer.ResetTimer();
+		deleteItemTimer.ResetTimer();
 		canSpawn = false;
 	}
 
@@ -50,6 +52,7 @@ public class ItemCollectionPoint : MonoBehaviour
 	private void Start()
 	{
 		timer = Utils.CreateTimer(3f);
+		deleteItemTimer = Utils.CreateTimer(9f);
 		var collider = GetComponent<SphereCollider>();
 		collider.radius = 0.1f;
 		collider.isTrigger = true;
@@ -61,6 +64,34 @@ public class ItemCollectionPoint : MonoBehaviour
 		{
 			canSpawn = true;
 		}
+
+		if (deleteItemTimer.timerDone.value)
+		{
+			deleteItemTimer.ResetTimer();
+			timer.ResetTimer();
+			canSpawn = true;
+
+			if (item != null)
+			{
+				item.DestroyItem();
+			}
+
+			item = null;
+			HasItem = false;
+		}
+	}
+
+	public void Wipe()
+	{
+		canSpawn = true;
+
+		if (item != null)
+		{
+			item.DestroyItem();
+		}
+
+		item = null;
+		HasItem = false;
 	}
 
 	private void OnTriggerEnter(Collider other)

@@ -1,5 +1,4 @@
 using CookieUtils;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -45,6 +44,8 @@ public class ItemSpawning : MonoBehaviour
 		{
 			windowPerson.itemCollectionPoint.ItemSpawning = this;
 		}
+
+		InvokeRepeating(nameof(WipeThrowable), 15, 15);
 	}
 
 	private void Update()
@@ -75,6 +76,19 @@ public class ItemSpawning : MonoBehaviour
 			allThrowables[i].DestroyItem();
 		}
 		allThrowables.Clear();
+
+		CancelInvoke(nameof(WipeThrowable));
+	}
+
+	public void WipeThrowable()
+	{
+		for (int i = 0; i < windowPersons.Length; i++)
+		{
+			windowPersons[i].itemCollectionPoint.Wipe();
+			windowPersonsAi[i].itemCollectionPoint.Wipe();
+		}
+
+		NumberOfSpawnedAssets = 0;
 	}
 
 	private bool AttemptObjectSpawn()

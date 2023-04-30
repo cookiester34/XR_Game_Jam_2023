@@ -46,7 +46,7 @@ public class Menu : MonoBehaviour
     private HealthBar aiHealthBar;
 
     [SerializeField]
-    private Animator animatorRef;
+    private ItemSpawning itemSpawning;
 
     private bool moveToGamePos;
 
@@ -101,6 +101,8 @@ public class Menu : MonoBehaviour
 
     public async void PlayGame()
     {
+        itemSpawning.WipeThrowable();
+
         moveToMenuPos = false;
         playerCrab.transform.position = playerCrabStartPosition.position;
         aiCrab.transform.position = aiCrabStartPosition.position;
@@ -117,6 +119,11 @@ public class Menu : MonoBehaviour
         aiHealthBar.Reset();
 
         Invoke(nameof(ActivateAI), 2f);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 
     private void ActivateAI()
